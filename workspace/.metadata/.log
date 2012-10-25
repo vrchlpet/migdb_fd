@@ -1,0 +1,13 @@
+!SESSION 2012-10-25 10:56:45.935 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.7.0_07
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=cs_CZ
+Framework arguments:  -product org.eclipse.epp.package.modeling.product -product org.eclipse.epp.package.modeling.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.modeling.product -data D:\skola\OI\diplomka2\repo\migdb_fd\workspace -product org.eclipse.epp.package.modeling.product -clean
+
+!ENTRY org.eclipse.update.configurator 4 0 2012-10-25 10:56:54.394
+!MESSAGE Unable to find feature.xml in directory: D:\skola\OI\diplomka2\eclipse-modeling-indigo-SR2-win32-x86_64\eclipse\features\es.upv.dsic.issi.moment.mdt_2.0.6.jar
+
+!ENTRY org.eclipse.update.configurator 4 0 2012-10-25 10:56:54.398
+!MESSAGE Unable to find feature.xml in directory: D:\skola\OI\diplomka2\eclipse-modeling-indigo-SR2-win32-x86_64\eclipse\features\org.antlr.ui_3.0.5.jar

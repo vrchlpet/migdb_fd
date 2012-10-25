@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<bundle bundleID="816" localization="plugin" name="%pluginName" project="migdb.mm.rdb" provider="%providerName">
+		<library name="."/>
+	</bundle>
+	<bundle bundleID="815" localization="plugin" name="%pluginName" project="migdb.mm.app" provider="%providerName">
+		<library name="."/>
+	</bundle>
+	<bundle bundleID="818" localization="OSGI-INF/l10n/bundle" name="Run" project="migdb.run"/>
+	<bundle bundleID="817" localization="OSGI-INF/l10n/bundle" name="migdbqvto" project="migdb.qvto" provider=""/>
+	<bundle bundleID="819" localization="OSGI-INF/l10n/bundle" name="Migdb-testing" project="migdb.testing.run"/>
+	<bundle bundleID="814" localization="OSGI-INF/l10n/bundle" name="Generator" project="migdb.generator"/>
+</map>
