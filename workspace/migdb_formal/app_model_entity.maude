@@ -1,0 +1,16 @@
+fmod MODEL_ENTITY is
+	pr BASE .
+	pr BASE_EXTENDED .
+	
+	sorts ModelEntity ModelEntitySequence .
+	subsort ModelEntity < Element .
+	subsort ModelEntity < ModelEntitySequence < ElementSequence < NeList{Element} .
+	
+	op modelEntity : Qid -> ModelEntity [ctor] .
+	op name : ModelEntity -> Qid .
+	
+	vars N : Qid .
+	
+	eq name(modelEntity(N)) = N .
+
+endfm

@@ -1,0 +1,26 @@
+fmod ASSOCIATION_PROPERTY is
+
+	pr MULTIPLIABLE_PROPERTY .
+	pr STANDARD_CLASS .
+	pr BOOL .
+
+	sort AssociationProperty .
+	subsort AssociationProperty < MultipliableProperty .
+
+	op associationProperty : MultipliableProperty StandardClass AssociationProperty -> AssociationProperty [ctor] .
+	
+	op getOppositeProperty : AssociationProperty -> AssociationProperty .
+	op getType : AssociationProperty -> StandardClass .
+	op getMultipliableProperty : AssociationProperty -> MultipliableProperty .
+	
+	var SC : StandardClass .
+	var N : Qid .
+	var AP : AssocitaionProperty .
+	var MP : MultipliableProperty .
+	
+	
+	eq getOppositeProperty(associationProperty(MP, SC, AP)) = AP .
+	eq getType(associationProperty(MP, SC, AP)) = SC .
+	eq getMultipliableProperty(associationProperty(MP, SC, AP)) = MP .
+
+endfm

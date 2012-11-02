@@ -1,0 +1,17 @@
+fmod TEST is
+
+	pr QID .
+
+	sorts Test Name .
+	subsort Qid < Name .
+	
+	op	test : Name -> Test [ctor] .
+	op getName : Test -> Name .
+	
+	var N : Name .
+	
+	eq getName(test(N)) = N .
+
+
+
+endfm

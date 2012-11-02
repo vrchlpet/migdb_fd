@@ -1,0 +1,28 @@
+fmod EMBADDED_CLASS is
+
+	pr Qid .
+	pr GENERAL_CLASS .
+	pr EMBADDED_PROPERTY .
+	
+	sorts EmbaddedClass .
+	subsort EmbaddedClass < GeneralClass .
+
+	op embaddedClass : EmbaddedProperty GeneralClass EmbaddedPropertySequence -> EmbaddedClass [ctor] .
+	op embaddedClass : EmbaddedProperty Qid EmbaddedPropertySequence -> EmbaddedClass .
+	op getEmbaddedProperty : EmbaddedClass -> EmbaddedPropertySequence .
+	op getIdProperty : EmbaddedClass -> EmbaddedProperty .
+	op getName : EmbaddedClass -> Qid .
+	
+	var N : Qid .
+	var GC : GeneralClass .
+	var EP : EmbaddedProperty .
+	var EPS : EmbaddedPropertySequence .
+	
+	eq embaddedClass(EP, N, EPS) = embaddedClass(EP, generalClass(modelEntity(N)), EPS) .
+	
+	eq getIdProperty(EP, GC, EPS) = EP .
+	eq getEmbaddedProperty(EP, GC, EPS) = EPS .
+	eq getName(EP, generalClass(modelEntity(N)), EPS) = N .
+	
+
+endfm

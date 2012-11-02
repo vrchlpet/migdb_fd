@@ -1,0 +1,22 @@
+fmod PRIMITIVE_PROPERTY is
+
+	pr QID .
+	pr MULTIPLIABLE_PROPERTY .
+	pr PRIMITIVE_CLASS .
+
+	sort PrimitiveProperty .
+	subsort PrimitiveProperty < MutlipliableProperty .
+	
+	op primitiveProperty : Qid PrimitiveClass -> PrimitiveProperty [ctor] .
+	op getDefaultValue : PrimitiveProperty -> Qid .
+	op getType : PrimitiveProperty -> PrimitiveClass .
+	
+	
+	var PC : PrimitiveClass .
+	var DV : Qid .
+	
+	eq getDefaultValue(primitiveProperty(DV, PC)) = DV .
+	eq getType(primitiveProperty(DV, PC)) = PC .
+	
+
+endfm
