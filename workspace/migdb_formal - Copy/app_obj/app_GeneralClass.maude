@@ -1,0 +1,7 @@
+(omod GENERAL-CLASS is
+	
+	pr MODEL-ENTITY .
+	
+	class GeneralClass | .
+
+endom)

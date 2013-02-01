@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;migdb_formal/db/db_column.maude&apos; to &apos;db_Column.maude&apos;" description="Rename resource &apos;db_column.maude&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="db/db_column.maude" name="db_Column.maude" stamp="1357141370007" updateReferences="true"/>
+</session>

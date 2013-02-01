@@ -1,0 +1,8 @@
+(omod TABLE is
+
+	pr BASE .
+	pr STRING .
+	
+	class Table | name : String
+
+endom)

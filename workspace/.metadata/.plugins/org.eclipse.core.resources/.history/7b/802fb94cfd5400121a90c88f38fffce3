@@ -1,0 +1,24 @@
+(omod TABLE is
+
+	pr BASE .
+	pr STRING .
+	pr CONSTRAINT .
+	pr COLUMN .
+	pr SCHEMA .
+	
+	class Table | name : String, columns : OidSeq, constraints : OidSeq, owningSchema : Oid .
+	
+	msg setName : Oid String -> Msg .
+	msg addColumn : Oid Oid -> Msg .
+	msg addConstraint : Oid Oid -> Msg .
+	msg setOwningSchema : Oid Oid -> Msg .
+	
+	vars M N : Oid .
+	var S : String .
+	var OS : OidSeq .
+	
+	rl [setName] : setName(M, S) < M : Table | > => < M : Table | name : S > .
+	rl [addColumn] : addColumn(M, N) < M : Table | columns : OS > < N : Column | > => < M : Table | columns : N OS > < N : Column | > .
+	rl [addConstraint] : addConstraint(M, N) < M : Table | constraints : OS > < N : Constraint | > => < M : Table | constraints : N OS > < N : Constraint | > .
+
+endom)

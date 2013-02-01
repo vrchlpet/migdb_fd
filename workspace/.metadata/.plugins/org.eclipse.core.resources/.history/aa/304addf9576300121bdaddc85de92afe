@@ -1,0 +1,17 @@
+(omod EMBADDED-PROPERTY is
+
+	pr BASE .
+	
+    subclass EmbaddedProperty < Property .
+	
+	msg setMandatory : Oid Bool -> Msg .
+	msg setType : Oid Oid -> Msg .
+	msg setOwningClass : Oid Oid -> Msg .
+	
+	var M N : Oid .
+	var B : Bool .
+	
+	rl [setMandatory] : setMandatory(M, B) < M : EmbaddedProperty | > => < M : EmbaddedProperty | isMandatory : B > . 
+	rl [setType] : setType(M, N) < M : EmbaddedProperty | > < N : PrimitiveClass | > => < M : EmbaddedProperty | type : N > < N : PrimitiveClass | > .
+	rl [setOwningClass] : setType(M, N) < M : EmbaddedProperty | > < N : EmbaddedClass | > => < M : EmbaddedProperty | type : N > < N : EmbaddedClass | > .
+endom)

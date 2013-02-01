@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete 7 resources" deleteContents="true" description="Delete 7 resources" element1="/migdb.generator" element2="/migdb.mm.app" element3="/migdb.mm.errors" element4="/migdb.mm.rdb" element5="/migdb.qvto" element6="/migdb.run" element7="/migdb.testing.run" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="7" stamp="1358982729618"/>
+</session>

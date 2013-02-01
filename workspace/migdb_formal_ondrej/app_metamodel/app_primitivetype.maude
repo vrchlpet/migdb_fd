@@ -1,0 +1,10 @@
+fmod APP-PRIMITIVE-TYPE is
+  	pr QID .
+	pr APP-ABSTRACT-TYPE .
+
+  	sort PrimitiveType .
+	subsort PrimitiveType < AbstractType .
+
+  	ops APPBOOL APPCHAR APPINT : -> PrimitiveType [ctor] .
+
+endfm

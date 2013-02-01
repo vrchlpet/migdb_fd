@@ -1,0 +1,35 @@
+load ../model_base.maude
+load db_primitivetype.maude
+load db_column.maude
+load db_primarykey.maude
+load db_foreignkey.maude
+load db_table.maude
+
+fmod SCHEMA is
+	pr QID .
+	pr BASE-EXTENDED .
+	pr TABLE .
+	pr NAT .
+
+	sorts Schema .  
+	subsort Ne < Schema .
+	
+	--- tables in schema
+	op schema : TableSequence -> Schema [ctor] .
+	
+	var TS : TableSequence .
+	var S : Schema .
+	
+	op getTables : Schema -> TableSequence .
+	eq getTables(schema(TS)) = TS .
+
+	op numberOfTables : Schema -> Nat .
+	eq numberOfTables(S) = length(getTables(S)) .
+	
+endfm
+
+
+
+
+
+

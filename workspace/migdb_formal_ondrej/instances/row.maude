@@ -1,0 +1,28 @@
+fmod ROW is
+	pr LIST{Content} .
+	pr LIST{KeyContent} .
+	
+	sort Row .
+	
+	--- primary key value, content of colums, content of foreign keys
+	--- na začátku by mělo být nil nil
+	op row : KeyContent List{Content} List{KeyContent} -> Row [ctor] .
+	
+	var Contents : List{Content} .
+	var PKVal : KeyContent .
+	var FKS : List{KeyContent} .
+	
+	op getContent : Row -> List{Content} .
+	eq getContent(row(PKVal, Contents, FKS)) = Contents . 
+	
+	op getForeignKeys : Row -> List{KeyContent} .
+	eq getForeignKeys(row(PKVal, Contents, FKS)) = FKS .
+	
+	op getKey : Row -> KeyContent .
+	eq getKey(row(PKVal, Contents, FKS)) = PKVal .
+	
+endfm
+
+view Row from TRIV to ROW is
+	sort Elt to Row .
+endv

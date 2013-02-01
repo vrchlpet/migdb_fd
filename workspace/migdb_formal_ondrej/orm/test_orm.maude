@@ -1,0 +1,5 @@
+load orm.maude 
+
+rew in ORM_MAUDE : removeFirstClass(model(nil)) .
+rew in ORM_MAUDE : removeFirstClass(model(class c)) .
+

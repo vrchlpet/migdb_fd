@@ -1,0 +1,58 @@
+fmod OBJECT is
+   pr STRING .
+   sort Object .
+   op getObjType(_) : Object -> String .
+   op getName(_) : Object -> String .
+
+   op NULL : -> Object [ctor] .
+endfm
+
+view Object from TRIV to OBJ is
+	sort Elt to Object .
+endv
+
+fmod REF is
+   pr STRING .
+   pr OBJECT .
+   sort Ref .
+   op ref(_ _) : String String -> Ref [ctor] .   
+   
+   var name : String .
+   var type : String .
+   var refEnt : Ref .
+   var obj : Object .
+
+   op getName (_) : Ref -> String .
+   eq getName(ref(name type)) = name .
+
+   op getRefType (_) : Ref -> String .
+   eq getRefType (ref(name type)) = type .     
+
+   op isRefObj(_ _) : Ref Object -> Bool .
+   eq isRefObj(refEnt obj) = getName(obj) == getName(refEnt) and getObjType(obj) == getRefType(refEnt) .
+endfm
+
+fmod UTILS is
+  pr LIST{Object} .
+  pr REF .  
+  
+  var list : List{Object} .
+  var refEnt : Ref .
+  var obj : Object .
+
+  op getObj(_ _) : Ref List{Object} -> Object .
+  eq getObj(refEnt nil) = NULL .
+  ceq getObj(refEnt list) = head(list) if(isRefObj(refEnt head(list)) == true ) .  
+  eq getObj (refEnt list) = getObj(refEnt tail(list)) .
+  
+  op remove(_ _) : Ref List{Object} -> List{Object} .
+  eq remove(refEnt nil ) = nil .
+  ceq remove(refEnt list ) = tail(list) if(isRefObj(refEnt head(list)) == true) .
+  eq  remove(refEnt list ) = head(list) remove(refEnt tail(list)) [owise] .
+ 
+  op contains(_ _) : Ref List{Object} -> Bool .
+  eq contains(refEnt nil) = false .
+  ceq contains(refEnt list) = true if(isRefObj(refEnt head(list)) == true ) .
+  eq contains(refEnt list) = contains(refEnt tail(list)) [owise] .
+
+endfm

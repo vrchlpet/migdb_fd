@@ -1,0 +1,7 @@
+fmod APP-ABSTRACT-TYPE is
+  pr BASE .
+
+  sort AbstractType .
+  subsort AbstractType < Element .
+
+endfm

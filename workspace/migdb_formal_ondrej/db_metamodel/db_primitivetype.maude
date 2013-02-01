@@ -1,0 +1,20 @@
+fmod DB-PRIMITIVE-TYPE is
+	
+	sort DbPrimitiveType .
+	
+	ops DBBOOL DBCHAR DBSTRING DBINT : -> DbPrimitiveType [ctor] .
+endfm
+
+
+
+
+
+
+
+
+
+
+
+
+
+

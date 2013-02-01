@@ -1,0 +1,20 @@
+(omod STANDARD-CLASS is
+	
+	pr GENERAL-CLASS .
+	
+	sort StandardClassId .
+	subsort StandardClassId < Oid .
+	
+	
+	class StandardClass | isAbstract : BooleanId .
+	subclass StandardClass < GeneralClass .
+	
+	msg isAbstract : StandardClassId -> Msg .
+	
+	var P : StandardClassId .
+	var B : BooleanId .
+	var BB : Bool .
+	
+	rl [isAbstract] : isAbstract(P) < P : StandardClass | isAbstract : B > < B : Boolean | value : BB > => < B : Boolean | value : BB > .
+	
+endom)

@@ -1,0 +1,16 @@
+(omod COLUMN is
+
+	pr BASE .
+	pr STRING .
+	
+	class Column | defaultValue : String, name : String, type : PrimitiveType .
+	
+	msg setDefaultValue : Oid String -> Msg .
+	msg setName : Oid String -> Msg .
+	msg setType : Oid PrimitiveType -> Msg . 
+
+	var M : Oid .
+	var S : String .
+
+	rl [setDefaultValue] : setDefaultValue(M, S)
+endom)

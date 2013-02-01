@@ -1,0 +1,16 @@
+(omod STRUCTURE is
+	
+	pr BASE .
+	pr MODEL-ENTITY .
+	
+	class ModelEntity | name : String .
+	
+	msg setName : Oid String -> Msg .
+
+
+	var M : Oid .
+	var S : String .
+
+	rl [setName] : setName(M, S) < M : ModelEntity | > => < M : ModelEntity | name : S > .
+	
+endom)

@@ -1,0 +1,15 @@
+(omod ASSOCIATION_PROPERTY is
+
+	pr BASE .
+	
+	subclass AssociationProperty < MultipliableProperty .
+	
+	msg setOppositeProperty : Oid Oid -> Msg .
+	msg setType : Oid Oid -> Msg . 
+	
+	var M N : Oid .
+	
+	rl [setOppositeProperty] : setOppositeProperty(M, N) < M : AssociationProperty | > < N : AssociationProperty | > => < M : AssociationProperty | oppositeProperty : N > < N : AssociationProperty | > .
+	rl [setType] : setType(M, N) < M : AssociationProperty | > < N : StandardClass | > => < M : AssociationProperty | type : N > < N : StandardClass | > .
+	
+endom)

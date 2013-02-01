@@ -1,0 +1,16 @@
+(omod INDEX is
+
+	pr BASE .
+	
+	msg setName : Oid String -> Msg .
+	msg addColumn : Oid Oid -> Msg .
+	msg setOwningSchema : Oid Oid -> Msg .
+
+	vars M N : Oid .
+	var S : String .
+	var OS : OidSeq .
+
+	rl [setName] : setName(M,S) < M : Index | > => < M : Index | name : S > .
+	rl [addColumn] : addColumn(M,N) < M : Index | columns : OS > < N : Column | > => < M : Index | columns : N OS > < N : Column | > .
+	rl [setOwningSchema] : setOwningSchema(M, N) < M : Index | > < N : Schema | > => < M : Index | owningSchema : N > < N : Schema | > .
+endom)

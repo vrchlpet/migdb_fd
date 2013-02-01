@@ -1,0 +1,18 @@
+(omod COLUMN is
+
+	pr BASE .
+	
+	msg setDefaultValue : Oid String -> Msg .
+	msg setName : Oid String -> Msg .
+	msg setType : Oid PrimitiveType -> Msg . 
+	msg setOwningTable : Oid Oid -> Msg .
+
+	var M N : Oid .
+	var S : String .
+	var PT : PrimitiveType .
+
+	rl [setDefaultValue] : setDefaultValue(M, S) < M : Column | > => < M : Column | defaultValue : S > .
+	rl [setName] : setName(M, S) < M : Column | > => < M : Column | name : S > .
+	rl [setType] : setType(M, PT) < M : Column | > => < M : Column | type : PT > .
+	rl [setOwningTable] : setOwningTable(M, N) < M : Column | > < N : Table | > => < M : Column | owningTable : N > < N : Table | > .
+endom)

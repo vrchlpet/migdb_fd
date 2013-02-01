@@ -1,0 +1,9 @@
+(omod COLUMN is
+
+	pr BASE-EXTENDED .
+	
+	sort ColumnId .
+	subsort ColumnId < Oid .
+
+
+endom)

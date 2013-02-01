@@ -1,0 +1,29 @@
+load ../db_metamodel/db_schema_creation.maude
+load content.maude
+load row.maude
+load storage.maude
+
+fmod DATABASE is
+	pr LIST{Storage} .
+	pr SCHEMA-CREATION . 
+	
+	--- normal database, database possibly in inconsistent state
+	sorts Database InconsistDatabase .
+	subsort InconsistDatabase < Database .
+	
+	--- database schema, storages for instances (should be empty at the beginning)
+	op database : Schema List{Storage} -> Database [ctor] .
+	
+	--- database schema, storages for instances
+	op inconsistDatabase : Schema List{Storage} -> InconsistDatabase [ctor] .
+	
+	var S : Schema .
+	var STS : List{Storage} .
+	
+	op schema : Database -> Schema .
+	eq schema(database(S, STS)) = S .
+	
+	op storages : Database -> List{Storage} .
+	eq storages(database(S, STS)) = STS .
+	
+endfm

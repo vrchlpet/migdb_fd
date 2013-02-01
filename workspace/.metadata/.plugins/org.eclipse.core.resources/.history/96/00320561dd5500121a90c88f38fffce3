@@ -1,0 +1,28 @@
+load base.maude .
+
+load db_Column.maude .
+(rew < 'column1 : Column | defaultValue : "defVal", name : "column1", type : APPINT, owningTable : 'ot1 > setDefaultValue('column1, "newDefVal") .)
+(rew < 'column1 : Column | defaultValue : "defVal", name : "column1", type : APPINT, owningTable : 'ot1 > setName('column1, "column2") .)
+(rew < 'column1 : Column | defaultValue : "defVal", name : "column1", type : APPINT, owningTable : 'ot1 > setType('column1, APPBOOL) .)
+(rew < 'column1 : Column | defaultValue : "defVal", name : "column1", type : APPINT, owningTable : 'ot1 > < 'table1 : Table | > setOwningTable('column1, 'table1) .)
+
+load db_Constraint.maude .
+(rew < 'constr1 : Constraint | name : "constr1", constrainedColumn : 'column1, owningTable : 'table > setName('constr1,"constr2") .)
+(rew < 'constr1 : Constraint | name : "constr1", constrainedColumn : 'someColumn, owningTable : 'table >  < 'column1 : Column | defaultValue : "defVal", name : "column1", type : APPINT, owningTable : 'ot1 > setConstrainedColumn('constr1,'column1) .)
+(rew < 'constr1 : Constraint | name : "constr1", constrainedColumn : 'column1, owningTable : 'table1 > < 'table2 : Table | name : "table2", columns : ne, constraints : ne, owningSchema : 'schema1 > setOwningTable('constr1,'table2) .)
+
+load db_Table.maude .
+(rew < 'table1 : Table | name : "table1", columns : ne, constraints : ne, owningSchema : 'schema1 > setName('table1, "table2") .)
+(rew < 'table1 : Table | name : "table1", columns : ne, constraints : ne, owningSchema : 'schema1 > < 'column1 : Column | defaultValue : "defVal", name : "column1", type : APPINT, owningTable : 'ot1 > addColumn('table2,'column1) .)
+(rew < 'table1 : Table | name : "table1", columns : ne, constraints : ne, owningSchema : 'schema1 > .)
+class Table | name : String, columns : OidSeq, constraints : OidSeq, owningSchema : Oid .
+
+
+
+
+
+
+
+
+
+

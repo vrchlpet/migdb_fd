@@ -1,0 +1,49 @@
+fmod INSTANCES is
+   pr TABLE_DATA .
+   sort Data .
+   
+   data(_) : List{TableData} -> Data [ctor] . 
+endfm 
+
+fmod TABLE_DATA is
+   pr QID .
+   pr LIST{Row} .
+
+   sort TableData .
+   *** Qid can be transformed to reference of table
+   tableData (_, _) : Qid List{Row} .
+endfm
+
+fmod ROW is
+   sort Row .
+   row (_) : List{Field} [ctor] .
+   var r : Row .
+   var fieldList : List{Field} . 
+   op getFieldCount(_) : Row -> Native .
+   eq getFieldCount(row (fieldList)) = size(fieldList) . 
+  
+endfm 
+
+fmod CONTENT is 
+   pr STRING .
+   sort Content .
+   subsort String < Content .
+   var c : Content .
+   var s : String .
+   op NULL : -> Content .
+   op getValue(_) : Content -> String .
+   eq getValue(NULL) = "" .
+   eq getValue(s) = s .
+
+endfm
+
+*** may contain information about FIELD_TYPE but should be independent to Table definition, validation of content should be done outside the data
+fmod FIELD is 
+   sort Field .
+   
+   var value : Content .
+   op field(_) : Content -> Field [ctor] .
+   op getContent(_) : Field -> Content .
+   eq getContent(field(value)) = getValue(value) .
+      
+endfm

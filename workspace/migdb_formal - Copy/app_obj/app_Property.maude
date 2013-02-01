@@ -1,0 +1,18 @@
+(omod PROPERTY is
+	
+	pr BASE-EXTENDED .
+	
+	sort PropertyId .
+	subsort PropertyId < Oid .
+	
+	class Property | name : StringId .
+	
+	msg getName : PropertyId -> Msg .
+	
+	var P : PropertyId .
+	var S : StringId .
+	var Q : Qid .
+	
+	rl [getName] : getName(P) < P : Property | name : S > < S : String | value : Q > => < S : String | value : Q > .
+
+endom)

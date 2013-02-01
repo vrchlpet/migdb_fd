@@ -1,0 +1,5 @@
+(omod NOT-NULL is
+
+	subclass NotNull < Constraint .
+
+endom)

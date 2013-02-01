@@ -1,0 +1,36 @@
+fmod TABLE is
+	pr QID .
+	pr PRIMARY-KEY .
+	pr BASE-EXTENDED .
+	pr FOREIGN-KEY .
+	pr COLUMN .
+
+	sorts Table TableSequence .
+	subsort Ne < Table < Element .
+	subsort Table < TableSequence < ElementSequence < NeList{Element} . 
+
+	op table : Qid PrimaryKey ColumnSequence ForeignKeySequence -> Table [ctor] . 
+	op __ : TableSequence TableSequence -> TableSequence [ctor ditto] .
+	
+	var A : Qid .
+	var PK : PrimaryKey .
+	var C : ColumnSequence .
+	var FK : ForeignKeySequence .
+		
+	eq name(table(A, PK, C, FK)) = A .
+		
+	op getPrimaryKey : Table -> PrimaryKey .
+	eq getPrimaryKey(table(A, PK, C, FK)) = PK .
+	
+	op getColumns : Table -> ColumnSequence .
+	eq getColumns(table(A, PK, C, FK)) = C .
+	
+ 	op getForeignKeys : Table -> ForeignKeySequence .
+	eq getForeignKeys(table(A, PK, C, FK)) = FK .
+
+endfm
+
+
+
+
+

@@ -1,0 +1,13 @@
+(omod STRUCTURE is 
+
+	pr BASE .
+
+	msg addSchema : Oid Oid -> Msg .
+	
+	var M N : Oid .
+	var OS : OidSeq .
+
+	rl [addSchema] : addSchema(M,N) < 
+	class Structure | schemas : OidSeq .
+
+endom)

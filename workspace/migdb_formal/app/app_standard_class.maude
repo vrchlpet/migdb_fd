@@ -1,0 +1,38 @@
+fmod STANDARD_CLASS is
+
+	pr GENERAL_CLASS .
+	pr MULTIPLIABLE_PROPERTY .
+	pr PRIMITIVE_PROPERTY .
+	pr BOOL .
+	
+	sort StandardClass .
+	subsort StandardClass < GeneralClass .
+	
+	op standardClass : Qid Bool MultipliablePropertySequence PrimitiveProperty StandardClass -> StandardClass .
+	op standardClass : GeneralClass Bool MultipliablePropertySequence PrimitiveProperty StandardClass -> StandardClass [ctor] .
+	
+	op getIdProperty : StandardClass -> PrimitiveProperty .
+	op isAbstract : StandardClass -> Bool .
+	op getParent : StandardClass -> StandardClass .
+	op getProperties : StandardClass -> MultipliablePropertySequence .
+	op getName : StandardClass -> Qid .
+	
+	
+	var N : Qid .
+	var A : Bool .
+	var MPS : MultipliablePropertySequence .
+	var PP : PrimitiveProperty .
+	var SC : StandardClass .
+	var GC : GeneralClass .
+	
+	eq standardClass(N, A, MPS, PP, SC) = standardClass(generalClass(N), A, MPS, PP, SC) .
+	
+	eq getIdProperty(standardClass(GC, A, MPS, PP, SC)) = PP .
+	eq isAbstract(standardClass(GC, A, MPS, PP, SC)) = A .
+	eq getParent(standardClass(GC, A, MPS, PP, SC)) = SC .
+	eq getProperties(standardClass(GC, A, MPS, PP, SC)) = MPS .
+	eq getName(standardClass(generalClass(N), A, MPS, PP, SC)) = N .
+
+
+
+endfm

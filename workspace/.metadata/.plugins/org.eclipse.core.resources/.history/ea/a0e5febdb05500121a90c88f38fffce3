@@ -1,0 +1,10 @@
+(omod CONSTRAINT is
+
+	pr BASE .
+	pr COLUMN .
+	pr STRING .
+	pr TABLE .
+	
+	class Constraint | name : String, constrainedColumn : Oid, owningTable : Oid .
+
+endom)

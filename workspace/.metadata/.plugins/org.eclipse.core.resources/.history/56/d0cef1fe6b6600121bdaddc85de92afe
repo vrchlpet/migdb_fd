@@ -1,0 +1,23 @@
+fmod BASE is
+
+	pr NAT .
+	pr QID .
+	pr BOOL .
+	pr STRING .
+	
+	sorts Car Porshe Trabant .
+	subsort Porshe < Car .
+	subsort Trabant < Car .
+	
+	op car : String -> Car [ctor] .
+	op porshe : String Nat -> Porshe [ctor] .
+	op trabant : String Bool -> Trabant [ctor] .
+	
+	var S : String .
+	var B : Bool .
+	var N : Nat .
+	
+	eq getName : Car -> String .
+	
+
+endfm

@@ -1,0 +1,8 @@
+(omod SEQUENCE is
+	
+	pr BASE .
+	
+	class Sequence | name : String, startValue : Nat, owningSchema : Oid .
+
+
+endom)

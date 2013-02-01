@@ -1,0 +1,15 @@
+load base.maude .
+
+load app_Property.maude .
+load app_ModelEntity.maude .
+load app_PrimitiveClass.maude .
+load app_EmbaddedProperty.maude .
+load app_MultipliableProperty.maude .
+load app_EmbaddedClass.maude .
+load app_PrimitiveProperty.maude .
+load app_StandardClass.maude .
+load app_AssociationProperty.maude .
+load app_Structure.maude .
+
+
+(rew < 'struct : Structure | entities : ne > addPrimitiveClass('struct, 'promCls, "primCLs", APPINT) .)

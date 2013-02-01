@@ -1,0 +1,19 @@
+fmod GENERAL_CLASS is
+
+	pr QID .
+	pr MODEL_ENTITY .
+
+	sort GeneralClass .
+	subsort GeneralClass < ModelEntity .
+	
+	op generalClass : Qid -> GeneralClass .
+	op generalClass : ModelEntity -> GeneralClass [ctor] .
+	op getName : Qid .
+	
+	var N : Qid .
+	var ME : ModelEntity .
+	
+	eq generalClass(N) = generalClass(modelEntity(N)) .
+	eq getName(generalClass(modelEntity(N)) = N .
+
+endfm

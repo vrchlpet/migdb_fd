@@ -1,0 +1,9 @@
+load base.maude .
+
+load app_Property.maude .
+(rew < 'prop : Property | name : "name" > setName('prop, "name2") .)
+
+
+
+
+

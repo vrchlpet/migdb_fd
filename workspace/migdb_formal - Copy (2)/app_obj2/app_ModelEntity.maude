@@ -1,0 +1,12 @@
+(omod MODEL-ENTITY is
+	
+	pr BASE .
+	
+	msg setName : Oid String -> Msg .
+
+	var M : Oid .
+	var S : String .
+
+	rl [setName] : setName(M, S) < M : ModelEntity | > => < M : ModelEntity | name : S > .
+	
+endom)

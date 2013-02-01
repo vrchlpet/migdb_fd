@@ -1,0 +1,8 @@
+(omod CONSTRAINT is
+
+	pr BASE .
+	pr COLUMN .
+	pr STRING .
+	pr TABLE .
+
+endom)

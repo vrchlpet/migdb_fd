@@ -1,0 +1,47 @@
+(omod STRUCTURE is
+	
+	pr BASE .
+	
+	msg addEntity : Oid Oid -> Msg .
+
+	var M N : Oid .
+	var OS : OidSeq .
+
+	rl [addEntity] : addEntity(M, N) < M : Structure | entities : OS > < N : ModelEntity | > => < M : Structure | entities : N OS > < N : ModelEntity | > .
+	
+	
+	----------------- OPERATIONS ---------------------
+
+	vars O1 O2 : Oid .
+	vars S1 S2 : String .
+	vars B1 B2 : Bool .
+	vars IT1 IT2 : InheritanceType .
+	vars C1 C2 : Configuration .
+	var OS1 : OidSeq .
+	var PT : PrimitiveType .
+	
+
+
+
+	
+
+endom)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

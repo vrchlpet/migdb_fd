@@ -1,0 +1,24 @@
+load ../model_base.maude
+load app_abstracttype.maude
+load app_primitivetype.maude
+load app_inheritancetype.maude
+load app_reference.maude
+load app_property.maude
+load app_class.maude
+load app_embededclass.maude
+
+
+fmod APP-MODEL is
+  	pr APP-CLASS .
+
+  	sort Model .
+
+  	op model : ClassSequence -> Model [ctor] .
+
+	var M : Model .
+	var CS : ClassSequence .
+	
+ 	op getClasses : Model -> ClassSequence .
+	eq getClasses(model(CS)) = CS .
+
+endfm

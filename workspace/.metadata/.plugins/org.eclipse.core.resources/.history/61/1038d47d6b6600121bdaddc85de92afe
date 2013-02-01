@@ -1,0 +1,12 @@
+fmod BASE is
+
+	pr NAT .
+	pr QID .
+	pr BOOL .
+	pr STRING .
+	
+	sorts Car Porshe Trabant .
+	subsort Porshe < Car .
+	subsort Trabant < Car .
+
+endfm

@@ -1,0 +1,21 @@
+(omod SCHEMA is
+
+	pr BASE .
+	
+	msg setName : Oid String -> Msg .
+	msg addTable : Oid Oid -> Msg .
+	msg addIndex : Oid Oid -> Msg .
+	msg setSequence : Oid Oid -> Msg .
+	
+	vars M N : Oid .
+	var S : String .
+	var OS : OidSeq .
+	
+	rl [setName] : setName(M,N) < M : Schema | > => < M : Schema | name : S > .
+	rl [addTable] : addTable(M,N) < M : Schema | tables : OS > < N : Table | > => < M : Schema | tables : N OS > < N : Table | > . 
+	rl [addIndex] : addIndex(M,N) < M : Schema | indexes : OS > < N : Index | > => < M : Schema | indexes : N OS > < N : Index | > .
+	rl [setSequence] : setSequence(M,N) < M : Schema | > < N : Sequence | > => < M : Schema | sequence : N > < N : Sequence | > .
+	
+	class Schema | name : String, tables : OidSeq, indexes : Oidseq, sequence : Oid .
+
+endom)

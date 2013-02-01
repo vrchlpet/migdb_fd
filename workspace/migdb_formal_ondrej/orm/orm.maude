@@ -1,0 +1,88 @@
+load ../app_metamodel.maude
+load ../db_metamodel.maude
+load ../utils/utils.maude
+
+fmod ORM is 
+   pr Class .
+   pr Property .
+   pr LIST{Class} .
+   pr LIST{Property} .
+
+   var appPrim : PrimitiveClass . 
+   var ref : Ref .      
+   var name : String .
+   var prop : Property .
+   var cls : Class .   
+   var original : Model .
+   var clsList : List{Class} .
+   var tblList : List{Table} .
+   var propList : List{Property} .
+   var colList : List{Column} .
+   var model : Model .
+   var owner : Class .
+
+   *** method called from outside accepts as parameters empty tblList and clsList == getClasses(... original)
+   op toTableModel(_ _ _) : Model List{Class} List{Table} -> List{Table} .
+   ceq toTableModel(original clsList tblList) = tblList if(clsList == nil) . 
+   ceq toTableModel(original clsList tblList)) = toTableModel(original tail(clsList) toTable(head(clsList) tblList appModel)) if(hasParent(head(clsList)) == false) . 
+   ceq toTableModel(original clsList tblList)) =  toTableModel(original tail(clsList) toTable(head(clsList) tblList appModel)) if(containsListClass(clsList name(getParent(head(clsList)))) == false) .
+   eq toTableModel(original, topClass(clsList name(getParent(head(clsList)))) tblList) [owise] .
+
+   *** nasadi Class s danym jmenem na zacatek listu  
+   op topClass(_ _) : List{Class} String -> List{Class} .
+   ceq topClass(clsList name) = nil if clsList == nil .
+   ceq topClass(clsList cls name) = cls clsList if(name(cls) == name) .
+   eq topClass(clsList cls name) = topClass(clsList name) cls [owise] . 
+
+   op toTable(_ _ _) : Class List{Table} Model -> Table . 
+   *** nema parenta, mapuj property -> sloupce        
+   ceq toTable(cls tblList original) = table(toColumns(getProperties(cls))) if(hasParent(cls) == false) .
+   *** id_parent should be changed
+   ceq toTable(cls tblList original) = table(name(cls) toColumns(getProperties(cls)) foreignKeyColumn("id_parent" name(getParent(cls)))) if(cls.getInheritanceType() == Joined) .
+
+   ceq toTable(cls tblList original) = table(toColumns(collectPropsToRoot(original cls))) if(cls.getInheritanceType == TablePerClass) .        
+   *** singleTable
+   eq  toTable(cls tblList original) = addColumnsToTable(getTable(name(getRootClass(cls, original) tblList) toColumns(getProperties(cls))) [owise].
+
+   op getTable(_ _) : String List{Table} .
+   eq getTable(name tblList) =  getObj(ref(name "table"), tblList) .
+
+   op addColumnsToTable(_ _ _) : String List{Column} List{TableList} -> Table .
+   eq addColumnsToTable(colList table) =  table(name(table)(getColumns(table) colList) getPrimaryKey(table) getForeignKeys(table)) .
+
+
+   *** handles only primitive properties with upperBound = 1 , there is trouble with M-N a 1-N bidirectional associations
+   op toColumns(_ _) : List{Property} Model-> List{Column} .
+   ceq toColumns((prop propList) model) = nil if prop propList == nil .  
+   ceq toColumns((prop propList) model) = toColumn(prop model) toColumns(propList model) if(isPrimitive(prop model) == true and getUpperBound(prop) == 1) .  
+   eq toColumns(prop propList model) = toColumns(propList model) [owise] .
+
+   *** handles only primitive properties 
+   op toColumn(_ _) : Property Model -> Column .
+   eq toColumn(prop model) = column(name(prop) toDbPrimitive(getType(prop) model)) .
+   
+   op addCollections(_ _ _) : Model List{Class} List{Table} .
+   *** TPC restriction - leaf or not inheritance type =/= TPC
+   eq addCollections(original nil tblList) = tblList .
+   eq addCollections(original clsList tblList) = addCollections(original tail(clsList) tblList toCollections(original getProperties(cls) cls) .
+
+   op toCollections(_ _) : Model List{Property} Class -> List{Table} .
+   ceq toCollections(original propList owner) = toCollections(original tail(propList) owner) if(getUpperBound(head(propList)) == 1 or isPrimitive(head(propList)) == false) .  
+   ceq toCollections(original(prop propList) owner) = table((name(prop) + owner) primaryKey("id_collection") column(name(prop) toDbPrimitive(getType(prop)))) foreignKey(("FK_" + name(prop)) name(getRootClass(original owner)) "public")) toCollections(original tail(propList) owner) if(getInheritanceType(owner) == SingleTable) .
+   eq toCollections(original(prop propList) owner) = table((name(prop) + owner) primaryKey("id_collection") column(name(prop) toDbPrimitive(getType(prop)))) foreignKey(("FK_" + name(prop)) name(owner) "public")) toCollections(original tail(propList) owner) [owise] .
+
+   *** handles nonprimitive properties(associations)
+   op addAssociations(_ _ _) :  Model List{Class} List{Table} .
+   eq addAssociations()
+
+   op toDbPrimitive(_ _) : Ref Model ->  DbPrimitiveType .
+   eq toDbPrimitive(ref model) =  
+
+op table(_ _ _ _) : String PrimaryKey List{Column} List{ForeignKey} -> Table [ctor] .
+
+   ***op getDbType() : DBBOOL DBCHAR DBSTRING DBINT
+
+endfm
+
+
+

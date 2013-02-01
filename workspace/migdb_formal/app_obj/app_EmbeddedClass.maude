@@ -1,0 +1,19 @@
+(omod EMBEDDED-CLASS is
+	
+	pr GENERAL-CLASS .
+	pr EMBEDDED-PROPERTY .
+	
+	sort EmbeddedClassId .
+	subsort EmbeddedClassId < Oid .
+	
+	class EmbeddedClass | idProperty : EmbeddedPropertyId .
+	subclass EmbeddedClass < GeneralClass .
+	
+	msg getIdProperty : EmbeddedClassId -> Msg .
+	
+	var P : EmbeddedClassId .
+	var E : EmbaddedPropertyId .
+	
+	rl [getIdProperty] : getIdProperty(P) < P : EmbeddedClass | idProperty : E > < E : EmbeddedProperty | > => < E : EmbeddedProperty | > .
+
+endom)

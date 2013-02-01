@@ -1,0 +1,10 @@
+(omod INDEX is
+
+	pr BASE .
+	
+	msg setName : Oid String -> Msg .
+	msg addColumn : Oid Oid -> Msg .
+	msg setOwningSchema : Oid Oid -> Msg .
+
+
+endom)

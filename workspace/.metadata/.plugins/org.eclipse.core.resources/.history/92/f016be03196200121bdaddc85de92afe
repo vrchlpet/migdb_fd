@@ -1,0 +1,35 @@
+load base.maude .
+
+load app_Property.maude .
+load app_ModelEntity.maude .
+load app_PrimitiveClass.maude .
+load app_EmbaddedProperty.maude .
+load app_MultipliableProperty.maude .
+load app_EmbaddedClass.maude .
+load app_PrimitiveProperty.maude .
+load app_StandardClass.maude .
+load app_AssociationProperty.maude .
+load app_Structure.maude .
+
+(omod MYTEST is
+
+	pr BASE .
+	class MyElement | name : String .
+	
+	op getxName : Object -> String .
+	op findObject : Configuration String -> Configuration .
+	
+	
+	var S : String .
+	var B : Bool .
+	var CC : Configuration .
+	eq getxName(< O:Oid : C:Cid | name : S, A:AttributeSet >) = S . 
+	eq findObject(< O:Oid : C:Cid | name : S, A:AttributeSet > CC, S) = CC .
+
+endom)
+
+(rew findObject(< 'MyElement : MyElement | name : "myName3" > < 'MyElement : MyElement | name : "myName" > < 'MyElement : MyElement | name : "myName2" >, "myName") .)
+
+(rew < 'MyElement : MyElement | name : "myName3" > == < 'MyElement : MyElement | name : "myName3" > .)
+
+(rew createPrimitiveClass('primCls, "primCLs", APPINT) .)

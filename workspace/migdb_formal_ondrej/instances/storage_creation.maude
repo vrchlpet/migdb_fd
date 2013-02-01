@@ -1,0 +1,21 @@
+fmod STORAGE-CREATION is
+	pr LIST{Storage} .
+	pr LIST{Row} .
+	
+	var Q : Qid .
+	var R : Row .
+	var RS : List{Row} .
+	var S : Storage .
+	var SS : List{Storage} .
+	var PKVal : KeyContent .
+	
+	op insertToStorage : Qid Row List{Storage} -> List{Storage} .
+	ceq insertToStorage(Q, R, SS) = append(storage(name(head(SS)), rows(head(SS)) R), tail(SS)) if Q == name(head(SS)) .
+	eq insertToStorage(Q, R, SS) = head(SS) insertToStorage(Q, R, tail(SS)) [owise] .
+	
+	op hasUniqueKey : KeyContent List{Row} -> Bool .
+	eq hasUniqueKey(PKVal, nil) = true .
+	eq hasUniqueKey(PKVal, R) = not getValue(PKVal) == getValue(getKey(R)) .  
+	eq hasUniqueKey(PKVal, RS) =  hasUniqueKey(PKVal, head(RS)) and hasUniqueKey(PKVal, tail(RS)) [owise] .
+	
+endfm

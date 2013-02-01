@@ -1,0 +1,19 @@
+(omod SEQUENCE is
+	
+	pr BASE .
+	
+	msg setName : Oid String -> Msg .
+	msg setStartValue : Oid Nat -> Msg .
+	msg setOwningSchema : Oid Oid -> Msg .
+	
+	vars M N : Oid .
+	var S : String .
+	var nat : Nat .
+	
+	rl [setName] : setName(M,S) < M : Sequence | > => < M : Sequence | name : S > .
+	rl [setStartValue] : setStartValue(M,nat) < M : Seequence | > => < M : Sequence | startValue : nat > . 
+	
+	class Sequence | name : String, startValue : Nat, owningSchema : Oid .
+
+
+endom)

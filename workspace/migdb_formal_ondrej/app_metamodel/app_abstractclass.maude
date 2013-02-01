@@ -1,0 +1,17 @@
+fmod APP-ABSTRACT-CLASS-CREATION is
+	pr APP-PROPERTY .
+	
+	sort AbstractClass .
+
+	
+	op addProperty : AbstractClass Property -> AbstractClass .
+	
+	op renameProperty : AbstractClass Qid Qid -> AbstractClass .
+
+	op setPropertyMandatoryTo : AbstractClass Qid Bool -> AbstractClass .
+	
+	op setPropertyIdTo : AbstractClass Qid Bool -> AbstractClass .
+	
+	op setOppositePropertyOfTo : AbstractClass Qid Qid Qid -> AbstractClass .
+
+endfm

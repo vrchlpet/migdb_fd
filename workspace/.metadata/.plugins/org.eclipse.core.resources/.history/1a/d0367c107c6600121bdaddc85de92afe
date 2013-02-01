@@ -1,0 +1,63 @@
+fmod BASE is
+
+	pr NAT .
+	pr QID .
+	pr BOOL .
+	pr STRING .
+	
+	sort Object .
+	
+	op null : -> Object [ctor] .
+
+	op _}_ : Object Object -> Object [ctor prec 33 gather (E e)] . 
+	
+	sorts Car Porsche Trabant .
+	
+	subsort Car < Object .
+	subsort Porsche < Object .
+	subsort Trabant < Object .
+	
+	var B : Bool .
+	var S : String .
+	var N : Nat .
+	var O1 O2 : Object .
+	var C : Car .
+	var P : Porsche .
+	var T : Trabant .
+	
+	op car : String -> Car [ctor] .
+	op newCar : String -> Car .
+	eq newCar(S) = car(S)}null .
+	
+	op porsche : Nat -> Porsche [ctor] .
+	op newPorsche : String Nat -> Porsche .
+	eq newPorsche(S, N) = porsche(N)}car(S)}null .
+	
+	op trabant : Bool -> Trabant [ctor] .
+	op newTrabant : String Nat Bool -> Trabant .
+	eq newTrabant(S, N, B) = trabant(B)}porsche(N)}car(S)}null .
+	
+	op getName : Car -> String .
+	eq getName(car(S)}O1) = S .
+	eq getName(O1}car(S)}O2) = S.
+	
+	op getSpeed : Porsche -> Nat .
+	eq getSpeed(porsche(N)C) = N .
+	eq getSpeed(O1}porsche(N)}O2) = N .
+	
+	op isBroken : Trabant -> Bool .
+	eq isBroken(trabant(B)}O2) = B .
+	eq isBroken(O1}trabant(B)}O2) = B .
+	
+endfm
+
+rew getName(car("car")) .
+rew newCar("car") .
+rew newPorsche("porsche", 100) .
+rew newTrabant("trabant", 100, true) .
+rew getName(newCar("car")) .
+rew getName(newPorsche("porsche", 100)) .
+rew getName(newTrabant("trabant", 100, true)) .
+rew getSpeed(newPorsche("porsche", 100)) .
+rew getSpeed(newTrabant("trabant", 100, true)) .
+rew isBroken(newTrabant("trabant", 100, true)) .

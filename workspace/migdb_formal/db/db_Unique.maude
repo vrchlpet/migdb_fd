@@ -1,0 +1,7 @@
+(omod UNIQUE is
+
+	pr BASE .
+	
+	subclass Unique < Constraint .
+
+endom)

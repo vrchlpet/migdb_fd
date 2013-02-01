@@ -1,0 +1,60 @@
+load app_model.maude
+load ../model_base_creation.maude
+load app_property_creation.maude
+load app_abstractclass.maude
+load app_class_creation.maude
+load app_embededclass_creation.maude
+
+
+fmod APP-MODEL-CREATION is
+	pr APP-MODEL .
+	pr APP-CLASS-CREATION .
+	pr APP-EMBEDDED-CLASS-CREATION .
+
+	var M : Model .
+	var C : Class .
+	vars A B D F : Qid .
+	var E : Bool .
+	var IT : InheritanceType .
+	var P : Property .
+	
+   	op addClass : Model Class -> Model .
+	eq addClass(M, ne) = M .
+	ceq addClass(M, C) = M if exists(name(C), getClasses(M)) .
+	eq addClass(M, C) = model(getClasses(M) C) [owise] .
+	
+	op renameClass : Model Qid Qid -> Model .
+	ceq renameClass(M, A, B) = M if exists(B, getClasses(M)) or not exists(A, getClasses(M)).
+	eq renameClass(M, A, B) = model(getOthersThan(A, getClasses(M)) updateName(B, getByName(A, getClasses(M)))) [owise] .
+	
+	op setClassAbstractTo : Model Qid Bool -> Model .
+	ceq setClassAbstractTo(M, A, E) = M if not exists(A, getClasses(M)) .
+	eq setClassAbstractTo(M, A, E) = model(getOthersThan(A, getClasses(M)) setClassAbstractTo(getByName(A, getClasses(M)), E)) [owise] .
+	
+	op setClassInheritanceType : Model Qid InheritanceType -> Model .
+	ceq setClassInheritanceType(M, A, IT) = M if not exists(A, getClasses(M)) .
+	eq setClassInheritanceType(M, A, IT) = model(getOthersThan(A, getClasses(M)) setClassInheritanceType(getByName(A, getClasses(M)), IT)) [owise] .
+	
+	op addProperty : Model Qid Property -> Model .
+	eq addProperty(M, A, ne) = M .
+	ceq addProperty(M, A, P) = M if not exists(A, getClasses(M)) .
+	eq addProperty(M, A, P) = model(getClasses(M) addProperty(P, getByName(A, getClasses(M)))) [owise] .
+	
+	op renameProperty : Model Qid Qid Qid -> Model .
+	ceq renameProperty(M, A, B, D) = M if not exists(A, getClasses(M)).
+	eq renameProperty(M, A, B, D) = model(getOthersThan(A, getClasses(M)) renameProperty(getByName(A, getClasses(M)), B, D)) [owise] .
+	
+	op setPropertyMandatoryTo : Model Qid Qid Bool -> Model .
+	ceq setPropertyMandatoryTo(M, A, B, E) = M if not exists(A, getClasses(M)).
+	eq setPropertyMandatoryTo(M, A, B, E) = model(getOthersThan(A, getClasses(M)) setPropertyMandatoryTo(getByName(A, getClasses(M)), B, E)) [owise] .
+	
+	op setPropertyIdTo : Model Qid Qid Bool -> Model .
+	ceq setPropertyIdTo(M, A, B, E) = M if not exists(A, getClasses(M)).
+	eq setPropertyIdTo(M, A, B, E) = model(getOthersThan(A, getClasses(M)) setPropertyIdTo(getByName(A, getClasses(M)), B, E)) [owise] .
+	
+	op setOppositePropertyOfTo : Model Qid Qid Qid Qid -> Model .
+	ceq setOppositePropertyOfTo(M, A, B, D, F) = M if not exists(A, getClasses(M)).
+	eq setOppositePropertyOfTo(M, A, B, D, F) = model(getOthersThan(A, getClasses(M)) setOppositePropertyOfTo(getByName(A, getClasses(M)), B, D, F)) [owise] .
+	---TODO ověřit existenci reference
+	
+endfm

@@ -1,0 +1,17 @@
+(omod MULTIPLIABLE-PROPERTY is 
+	
+	pr BASE-EXTENDED .
+	pr PROPERTY .
+---	pr STANDARD-CLASS .
+
+	sort MultipliablePropertyOid .
+	subsort MultipliablePropertyOid < Oid .
+
+	class MultipliableProperty | isOrdered : BoolF, isUnique : BoolF, lowerBound : IntegerF, upperBound : IntegerF . 
+---	class MultipliableProperty | isOrdered : BoolF, isUnique : BoolF, lowerBound : IntegerF, upperBound : IntegerF, owningClass : StandardClassOid .
+
+endom)
+
+(view MultipliablePropertyOid from TRIV to MULTIPLIABLE-PROPERTY is
+	sort Elt to MultipliablePropertyOid .
+endv)

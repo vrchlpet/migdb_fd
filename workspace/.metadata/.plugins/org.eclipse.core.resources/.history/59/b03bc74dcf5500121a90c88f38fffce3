@@ -1,0 +1,11 @@
+(omod FOREIGN-KEY is
+
+	pr BASE .
+	subclass ForeignKey < Constraint .
+	
+	msg setTargetTable : Oid Oid -> Msg .
+	
+	
+	class ForeignKey | targetTable : Oid .
+
+endom)

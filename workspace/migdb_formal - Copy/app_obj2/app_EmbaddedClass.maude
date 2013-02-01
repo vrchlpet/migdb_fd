@@ -1,0 +1,14 @@
+(omod EMBADDED-CLASS is
+
+	pr GENERAL-CLASS .
+	pr EMBADDED-PROPERTY .
+	pr LIST{EmbaddedPropertyOid} .
+
+	sort EmbaddedClassOid .
+	subsort EmbaddedClassOid < Oid .
+
+	class EmbaddedClass | idProperty : EmbaddedPropertyOid, embaddedProperties : List{EmbaddedPropertyOid} .
+
+	subclass EmbaddedClass < GeneralClass .
+	
+endom)

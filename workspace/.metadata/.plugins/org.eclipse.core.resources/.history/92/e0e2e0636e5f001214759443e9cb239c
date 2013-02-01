@@ -1,0 +1,17 @@
+
+(omod BASE is 
+
+	pr STRING .
+	pr QID .
+	subsort Qid < Oid .
+	pr NAT .
+	
+	class ELement | name : String .
+	
+	
+	var S : String .
+	
+	op getName : Object -> String .
+	eq getName(< O:Oid : C:Cid | name : S >) = S 
+
+endom)

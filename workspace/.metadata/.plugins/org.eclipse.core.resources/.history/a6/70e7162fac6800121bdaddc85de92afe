@@ -1,0 +1,66 @@
+view PrimitiveType from TRIV to BASE is
+	sort Elt to PrimitiveType .
+endv
+
+fmod BASE is
+
+	pr SEQUENCE{PrimitiveType} .
+	sort PrimitiveType .
+	op INT BOOL NAT CHAR : -> PrimitiveType .
+	
+	var PT : PrimitiveType .
+	var PTL : List{PrimitiveType} .
+	
+	op add : PrimitiveType List{PrimitiveType} -> List{PrimitiveType} .
+	eq add(PT, PTL) = [] PTL .
+	
+
+endfm
+
+fmod SEQUENCE{X :: TRIV} is
+
+	sorts NeList{X} List{X} .
+	subsort X$Elt < NeList{X} < List{X} .
+	pr QID .
+
+	op [] : -> List{X} [ctor] .
+	op __ : List{X} List{X} -> List{X} [ctor assoc] .
+
+	op name : X$Elt -> Qid .
+
+	var E : X$Elt .
+	var L : List{X} .
+	var Q : Qid .
+
+	eq [] L = L .
+	eq L [] = L .
+
+	op head : List{X} -> X$Elt .
+	eq head([]) = [] .
+	eq head(E L) = E .
+	eq head(E) = E .
+
+	op tail : List{X} -> List{X} .
+	eq tail([]) = [] .
+	eq tail(E L) = L .
+	eq tail(E) = [] .
+
+	op containsName : List{X} Qid -> Bool .	
+	eq containsName([], Q) = false .
+	eq containsName(L, Q) = name(head(L)) == Q or containsName(tail(L), Q) .
+
+	op removeByName : List{X} Qid -> List{X} .
+	eq removeByName([], Q) = [] .
+	ceq removeByName(L, Q) = tail(L) if name(head(L)) == Q .
+	eq removeByName(L, Q) = head(L) removeByName(tail(L), Q) [owise] .
+
+	op getByName : List{X} Qid -> X$Elt .
+	eq getByName([], Q) = [] .
+	ceq getByName(L, Q) = head(L) if name(head(L)) == Q .
+	eq getByName(L, Q) = getByName(tail(L), Q) [owise] .
+
+endfm
+
+
+
+

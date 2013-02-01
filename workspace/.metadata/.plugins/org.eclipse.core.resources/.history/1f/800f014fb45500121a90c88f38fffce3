@@ -1,0 +1,9 @@
+(omod CONSTRAINT is
+
+	pr BASE .
+	
+	msg setName : Oid String -> Msg .
+	msg setConstrainedColumn : Oid Oid -> Msg .
+	msg setOwningTable : Oid Oid -> Msg .
+
+endom)

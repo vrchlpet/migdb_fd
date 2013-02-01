@@ -1,0 +1,29 @@
+fmod EMBADDED_PROPERTY is 
+	
+	pr BASE .
+	pr BASE-EXTENDED .
+	pr EMBADDED_CLASS .
+	pr PRIMITIVE_CLASS .
+	pr PROPERTY .
+	pr BOOL .
+	
+	sorts EmbaddedProperty EmbaddedPropertySequence .
+	subsort EmbaddedProperty < Property .
+	subsort EmbaddedProperty < Element .
+	subsort EmbaddedProperty < EmbaddedPropertySequence < ElementSequence < NeList{Element} .
+
+---							type		embadded_class	isabstract
+	op embaddedProperty : PrimitiveClass EmbaddedClass bool -> EmbaddedProperty [ctor] .
+	op isAbstract : EmbaddedProperty -> Bool .
+	op getType : EmbaddedProperty -> PrimitiveClass .
+	op getOwningClass : EmbaddedProperty -> .
+	
+	var PC : PrimitiveClass .
+	var B : Bool .
+	var EC : EmbaddedClass .
+	
+	eq isAbstract(embaddedProperty(PC, EC, B)) = B .
+	eq getType(embaddedProperty(PC, EC, B)) = PC .
+	eq getOwningClass(embaddedProperty(PC, EC, B)) = EC .
+	
+endfm

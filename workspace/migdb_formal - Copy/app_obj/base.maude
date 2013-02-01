@@ -1,0 +1,32 @@
+(omod BASE is
+	
+	pr QID .
+	pr INT .
+	pr BOOL .
+	
+	sorts PrimitiveTypeId StringId IntegerId BooleanId .
+	
+	subsort PrimitiveTypeId < Oid .
+	subsort StringId < Oid .
+	subsort IntegerId < Oid .
+	subsort BooleanId < Oid .
+	
+	class PrimitiveType | value : Qid .
+	
+	class String | value : Qid .
+	class Integer | value : Int .
+	class Boolean | value : Bool .
+	
+	subclass String < PrimitiveType .
+	subclass Integer < PrimitiveType .
+	subclass Boolean < PrimitiveType .
+
+endom)
+
+(omod BASE-EXTENDED is
+	
+	pr BASE .
+	
+	subsort Oid < Qid .
+
+endom)

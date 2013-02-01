@@ -1,0 +1,24 @@
+fmod EXAMPLE is 
+  pr UTILS .
+  sort Example .
+  subsort Example < Object .
+  
+  var name : String . 
+  var ex : Example .
+  op example (_) : String -> Example [ctor] .
+  eq getObjType(ex) = "example" .
+  eq getName (example(name)) = name .
+endfm
+
+  rew in EXAMPLE : getObj(ref("myInstance" "example") nil) .
+  rew in EXAMPLE : getObj(ref("myInstance" "example") (example("instance") example("DEMO"))) . 
+  rew in EXAMPLE : getObj(ref("myInstance" "example") (example("myInstance") example("DEMO"))) .
+
+  rew in EXAMPLE : contains(ref("myInstance" "example") (example("myInstance") example("DEMO"))) .
+  rew in EXAMPLE : contains(ref("myInstance" "example") (example("instance") example("DEMO"))) .
+  rew in EXAMPLE : contains(ref("myInstance" "example") nil) .
+
+  rew in EXAMPLE : remove(ref("myInstance" "example") (example("myInstance") example("DEMO"))) .
+  rew in EXAMPLE : remove(ref("myInstance" "example") (example("instance") example("DEMO"))) .
+  rew in EXAMPLE : remove(ref("myInstance" "example") nil) .
+

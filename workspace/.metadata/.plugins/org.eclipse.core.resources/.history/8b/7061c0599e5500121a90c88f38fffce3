@@ -1,0 +1,11 @@
+(omod PROPERTY is
+
+	pr BASE .
+
+	msg setName : Oid String -> Msg .
+
+	var M : Oid .
+	var S : String .
+
+	rl [setName] : setName(M, S) < M : Property | > => < M : Property | name : S > .
+endom)

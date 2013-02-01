@@ -1,0 +1,16 @@
+(omod PRIMITIVE-PROPERTY is 
+
+	pr BASE .
+	
+	
+
+	msg setDefaultValue : Oid String -> Msg .
+	msg setType : Oid Oid -> Msg .
+
+	var M N : Oid .
+	var B : String .
+
+	rl [setDefaultValue] : setDefaultValue(M, B) < M : PrimitiveProperty | > => < M : PrimitiveProperty | defaultValue : B > . 
+	rl [setType] : setType(M, N) < M : PrimitiveProperty | > < N : PrimitiveClass | > => < M : PrimitiveProperty | type : N > < N : PrimitiveClass | > .
+
+endom)

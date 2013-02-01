@@ -1,0 +1,40 @@
+fmod CONTENT is
+	pr STRING .
+	pr NAT .
+	pr QID .
+	
+	--- all values are strings expect keys (primary, foreign)
+	sort Content KeyContent .
+	
+	--- name of the column, string value of the column
+	op content : Qid String -> Content [ctor] .
+	
+	--- name of the column, nat value of the column
+	op keyContent : Qid Nat -> KeyContent [ctor] .
+	
+	var Q : Qid .
+	var SVal : String .
+	var NVal : Nat .
+	
+	
+	op getColumn : Content -> Qid .
+	eq getColumn(content(Q, SVal)) = Q .
+	
+	op getColumn : KeyContent -> Qid .	
+	eq getColumn(keyContent(Q, NVal)) = Q .
+	
+	op getValue : Content -> String .
+	eq getValue(content(Q, SVal)) = SVal .
+	
+	op getValue : KeyContent -> Nat .
+	eq getValue(keyContent(Q, NVal)) = NVal .
+	
+endfm
+
+view Content from TRIV to CONTENT is
+	sort Elt to Content .
+endv
+
+view KeyContent from TRIV to CONTENT is
+	sort Elt to KeyContent .
+endv

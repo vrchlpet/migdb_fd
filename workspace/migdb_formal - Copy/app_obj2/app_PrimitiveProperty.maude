@@ -1,0 +1,13 @@
+(omod PRIMITIVE-PROPERTY is 
+
+	pr BASE-EXTENDED .
+	pr MultipliableProperty .
+	pr PrimitiveClass .
+	
+	sort PrimitivePropertyOid .
+	subsort PrimitivePropertyOid < Oid .
+	
+	class PrimitiveProperty | defaultValue : StringF , type : primitiveClassOid .
+	subclass PrimitiveProperty < MultipliableProperty .
+
+endom)

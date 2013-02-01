@@ -1,0 +1,182 @@
+fmod SEQUENCE{X :: TRIV} is
+
+	sorts NeList{X} List{X} .
+	subsort X$Elt < NeList{X} < List{X} .
+	pr QID .
+
+	op [] : -> List{X} [ctor] .
+	op __ : List{X} List{X} -> List{X} [ctor assoc] .
+
+	op name : X$Elt -> Qid .
+
+	var E : X$Elt .
+	var L : List{X} .
+	var Q : Qid .
+
+	eq [] L = L .
+	eq L [] = L .
+
+	op head : List{X} -> X$Elt .
+	eq head([]) = [] .
+	eq head(E L) = E .
+	eq head(E) = E .
+
+	op tail : List{X} -> List{X} .
+	eq tail([]) = [] .
+	eq tail(E L) = L .
+	eq tail(E) = [] .
+
+	op containsName : List{X} Qid -> Bool .	
+	eq containsName([], Q) = false .
+	eq containsName(L, Q) = name(head(L)) == Q or containsName(tail(L), Q) .
+
+	op removeByName : List{X} Qid -> List{X} .
+	eq removeByName([], Q) = [] .
+	ceq removeByName(L, Q) = tail(L) if name(head(L)) == Q .
+	eq removeByName(L, Q) = head(L) removeByName(tail(L), Q) [owise] .
+
+	op getByName : List{X} Qid -> X$Elt .
+	eq getByName([], Q) = [] .
+	ceq getByName(L, Q) = head(L) if name(head(L)) == Q .
+	eq getByName(L, Q) = getByName(tail(L), Q) [owise] .
+
+endfm
+
+fmod APP-TYPES is
+	
+	sort PrimitiveType .
+	ops APPINT APPCHAR APPBOOL APPSTRING : -> PrimitiveType [ctor] .
+	
+	sort InheritanceType .
+	ops APPSINGHLETABLE APPJOINED APPTABLEPERCLASS : -> InheritanceType [ctor] .
+	
+	
+	sort Object .
+	
+	op null : -> Object [ctor] .
+
+	op _{_ : Object Object -> Object [ctor prec 33 gather (e E)] .
+	
+	
+	sort AssociationProperty . subsort AssociationProperty < Object .
+	sort EmbaddedClass . subsort EmbaddedClass < Object .
+	sort EmbaddedProperty . subsort EmbaddedProperty < Object .
+	sort GeneralClass . subsort GeneralClass < Object .
+	sort ModelEntity . subsort ModelEntity < Object .
+	sort MultipliableProperty . subsort MultipliableProperty < Object .
+	sort PrimitiveClass . subsort PrimitiveClass < Object .
+	sort PrimitiveProperty . subsort PrimitiveProperty < Object .
+	sort Property . subsort Property < Object .
+	sort StandardClass . subsort StandardClass < Object .
+
+endfm
+
+view PrimTypeView from TRIV to APP-TYPES is
+	sort Elt to PrimitiveType .
+endv
+
+view Strings from TRIV to STRING is
+	sort Elt to String .
+endv	
+	
+view MultipliableProperties from TRIV to APP-TYPES is
+	sort Elt to MultipliableProperty .
+endv
+	
+view EmbaddedProperties from TRIV to APP-TYPES is
+	sort Elt to EmbaddedProperty .
+endv
+
+fmod BASE is
+
+	pr APP-TYPES .
+	pr NAT .
+	pr QID .
+	pr BOOL .
+	pr STRING .
+	pr SEQUENCE{Strings} .
+	pr SEQUENCE{MultipliableProperties} .
+	pr SEQUENCE{EmbaddedProperties} .
+	
+		
+	
+	
+	vars S1 S2 S3 S4 : String .
+	vars PT1 : PrimitiveType .
+	vars B1 B2 : Bool .
+	vars N1 N2 : Nat .
+	var Ss : List{Strings} .
+	var MPs : List{MultipliableProperties} .
+	var EPs : List{EmbaddedProperties} .
+	var IT : InheritanceType .
+	
+	
+	op modelEntity : String -> ModelEntity [ctor] .
+	op newModelEntity : String -> ModelEntity .
+	--- S1=name
+	eq newModelEntity(S1) = modelEntity(S1){null .
+	
+	op primitiveClass : PrimitiveType -> PrimitiveClass [ctor] .
+	op newPrimitiveClass : String PrimitiveType -> PrimitiveClass .
+	--- S1=name,PT1=primitiveType
+	eq newPrimitiveClass(S1, PT1) = modelEntity(S1){primitiveClass(PT1){null .
+	
+	op property : String -> Property [ctor] .
+	op newProperty : String -> Property .
+	--- S1=propName
+	eq newProperty(S1) = property(S1){null .
+	
+	op multipliableProperty : String Bool Bool Nat Nat -> MultipliableProperty [ctor] .
+	op newMultipliableProperty : String String Bool Bool Nat Nat -> MultipliableProperty .
+	--- S1=name,S2=ownClsName,B1=isOrdered,B2=isUnique,N1=lBound,N2=uBound
+	eq newMultipliableProperty(S1, S2, B1, B2, N1, N2) = property(S1){multipliableProperty(S2, B1, B2, N1, N2){null .
+	
+	op primitiveProperty : String String -> PrimitiveProperty [ctor] .
+	op newPrimitiveProperty : String String String String Bool Bool Nat Nat -> PrimitiveProperty .
+	--- S1=propName,S2=ownClsName,S3=defVal,S4=PrimClsName(type att)
+	eq newPrimitiveProperty(S1, S2, S3, S4, B1, B2, N1, N2) = property(S1){multipliableProperty(S2, B1, B2, N1, N2){primitiveProperty(S3,S4){null .
+	
+	op embaddedProperty : String Bool String -> EmbaddedProperty [ctor] .
+	op newEmbaddedProperty : String String Bool String -> EmbaddedProperty .
+	--- S1=propName,S2=primClsName(type),B1=isMandatory,S3=owningCls
+	eq newEmbaddedProperty(S1, S2, B1, S3) = property(S1){embaddedProperty(S2, B1, S3){null .
+	
+	op embaddedClass : String List{Strings} -> EmbaddedProperty [ctor] .
+	op newEmbaddedClass : String String List{Strings} -> EmbaddedProperty .
+	--- S1=name,S2=EmbdProp(idProp),List=embPropsNames(embaddedProperties)
+	eq newEmbaddedClass(S1, S2, Ss) = modelEntity(S1){embaddedClass(S2, Ss){null .
+	
+	op standardClass : List{MultipliableProperties} String InheritanceType Bool String -> StandardClass [ctor] .
+	op newStandardClass : String List{MultipliableProperties} String InheritanceType Bool String -> StandardClass .
+	--- S1=name,List=properties,S2=primProp(idProperty),IT=inheritanceType,B1=isAbstract,S3=parrentName
+	eq newStandardClass(S1, MPs, S2, IT, B1, S3) = modelEntity(S1){standardClass(MPs, S2, IT, B1, S3){null . 
+	
+	op associationProperty : String String -> AssociationProperty [ctor] .
+	op newAssociationProperty : String String Bool Bool Nat Nat String String -> AssociationProperty .
+	--- S1=name,S2=ownClsName,B1=isOrdered,B2=isUnique,N1=lBound,N2=uBound,S3=standardClass(type),S4=oppositeProp
+	eq newAssociationProperty(S1, S2, B1, B2, N1, N2, S3, S4) = property(S1){multipliableProperty(S2, B1, B2, N1, N2){associationProperty(S3, S4){null .
+	
+	
+	
+endfm
+
+
+	
+------------------------------------------------------------TESTS------------------------------------------------------------------
+rew newModelEntity("modelEntity") .
+rew newPrimitiveClass("primCls", APPINT) .
+rew newProperty("property") .
+rew newMultipliableProperty("name","ownClsName",false,true,1,2) .
+rew newPrimitiveProperty("propName", "ownCls", "defVal", "primCls",false,true,1,2) .
+rew newEmbaddedProperty("propName", "primClsName", false, "ownCls") .
+rew newEmbaddedClass("name", "idProp", "prop1" "prop2") .
+rew newStandardClass("name", newMultipliableProperty("name","ownClsName",false,true,1,2) newMultipliableProperty("name2","ownClsName",false,true,1,2), "primProp", APPJOINED,false,"parent") .	
+rew newAssociationProperty("name", "ownCls", true, false, 1, 2, "stdClsType", "oppProp") .
+	
+	
+	
+	
+	
+	
+	
+		

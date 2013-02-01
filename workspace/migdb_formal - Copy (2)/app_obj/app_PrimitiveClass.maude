@@ -1,0 +1,19 @@
+(omod PRIMITIVE-CLASS is
+	
+	pr MODEL-ENTITY .
+	
+	sort PrimitiveClassId .
+	subsort PrimitiveClassId < Oid .
+	
+	
+	class PrimitiveClass | primitiveType : PrimitiveTypeId .
+	
+	msg getPrimitiveType : PrimitiveClassId -> Msg .
+	
+	var P : PrimitiveClassId .
+	var V : PrimitiveTypeId .
+	var Q : Oid .
+	
+	rl [getPrimitiveType] : getPrimitiveType(P) < P : PrimitiveClass | primitiveType : V > < V : PrimitiveType | value : Q > => < V : PrimitiveType | value : Q > .
+
+endom)

@@ -1,0 +1,24 @@
+fmod BASE is
+
+	pr NAT .
+	pr QID .
+	pr STRING .
+	
+	sorts Car Porsche .
+	subsort Porsche < Car .
+	
+	op car : String -> Car [ctor] .
+	op porsche : String Nat -> Porsche [ctor] .
+	
+	var S : String .
+	var N : Nat .
+	
+	op getName : Car -> String .
+	eq getName(car(S)) = S .
+	
+	op getSpeed : Porsche -> N .
+	eq getSpeed(porsche(S,N)) = N .
+
+endfm
+
+rew car("car") .

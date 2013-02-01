@@ -1,0 +1,33 @@
+fmod BASE is
+
+	pr NAT .
+	pr QID .
+	pr STRING .
+	
+	sort Object .
+	
+	op null : -> Object [ctor] .
+	
+	op [_{_}] : Object Object -> Object [ctor] . 
+	
+	sorts Car Porsche .
+	
+	subsort Car < Object .
+	subsort Porsche < Object .
+	
+	
+	var S : String .
+	var N : Nat .
+	
+	op car : String -> Car [ctor] .
+	op newCar : String -> Object .
+	eq newCar(S) = [car(S){null}] .
+	
+	op porsche : Nat -> Porsche [ctor] .
+	op newPorsche : String Nat -> Object .
+	eq newPorsche(S, N) = [car(S){porsche(N){null}}] .
+	
+endfm
+
+rew newCar("car") .
+rew newPorsche("porsche", 100) .

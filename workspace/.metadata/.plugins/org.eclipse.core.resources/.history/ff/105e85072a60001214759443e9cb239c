@@ -1,0 +1,62 @@
+(omod STRUCTURE is
+	
+	pr BASE .
+	
+	msg addEntity : Oid Oid -> Msg .
+
+	var M N : Oid .
+	var OS : OidSeq .
+
+	rl [addEntity] : addEntity(M, N) < M : Structure | entities : OS > < N : ModelEntity | > => < M : Structure | entities : N OS > < N : ModelEntity | > .
+	
+	
+	
+----------------- OPERATIONS ---------------------
+
+--- structure	firstClassName	firstPropName	secondClassName secondPropName isOpposite
+	msg setOpposite : Oid String String String String Bool -> Msg .
+	
+--- structure className	isAbstract
+	msg setAbstract : Oid String bool -> Msg .
+	
+--- structure childName parentName
+	msg setParent : Oid String String -> Msg .
+	
+--- struture owningClassName	attName	type
+	msg setType : Oid String String String -> Msg .
+	
+--- structure	owningCLassName	propName	lBound	uBound
+	msg setBounds : Oid String String Nat Nat -> Msg .
+	
+--- structure	owningClassName	propName	isOrderd
+	msg setOrdered : Oid String String Bool -> Msg .
+	
+--- structure	owningClassName	propName	isunique
+	msg setUnique : Oid String String Bool -> Msg .
+	
+--- structure	owningClassName	propName	targetClassName	mergeType
+	msg copyProperty : Oid String String String -> Msg .
+	
+--- structure	owningClassName	propName	targetClassName	mergeType
+	msg moveProperty : Oid String String String -> Msg .
+	
+endom)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

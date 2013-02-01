@@ -1,0 +1,18 @@
+fmod PRIMARY-KEY is
+	pr QID .
+	pr DB-PRIMITIVE-TYPE .
+	pr BASE-EXTENDED .
+	
+	sort PrimaryKey .
+	subsort PrimaryKey < Element .
+	
+	op primaryKey : Qid -> PrimaryKey [ctor] .	
+	
+	var A : Qid .
+	
+	eq name(primaryKey(A)) = A .
+	
+	op getPKType : PrimaryKey -> DbPrimitiveType .
+	eq getPKType(primaryKey(A)) = DBINT .
+	
+endfm

@@ -1,0 +1,21 @@
+(omod MODEL-ENTITY is
+	
+	pr BASE-EXTENDED .
+	
+	
+	sort StringOid < Oid .
+	subsort Qid < Oid .
+	
+	class StringVal | value : StringOid .
+	class ModelEntity | name : String .
+	
+	msg getName : Oid -> Msg .
+	
+	var N M : Oid .
+	var S : String .
+	var SN : StringOid .
+	
+	rl [getName] : getName < N : ModelEntity | name : SN > < SN : StringVal | name : S > => < SN : StringVal | name : S > .
+
+
+endom)

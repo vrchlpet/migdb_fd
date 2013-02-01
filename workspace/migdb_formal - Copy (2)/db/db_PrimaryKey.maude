@@ -1,0 +1,7 @@
+(omod PRIMARY-KEY is
+	
+	pr BASE .
+	
+	subclass PrimaryKey < Constraint .
+
+endom)

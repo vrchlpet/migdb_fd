@@ -1,0 +1,18 @@
+fmod PRIMITIVE_CLASS is
+	pr MODEL_ENTITY .
+	pr PRIMITIVE_TYPE .
+	pr BASE .
+		
+	sort PrimitiveClass .
+	subsort PrimitiveClass < ModelEntity .
+
+	op primitiveClass : Qid -> PrimitiveClass [ctor] .
+	op name : PrimitiveClass -> Qid .
+	
+	
+	vars N : Qid .
+	
+	eq name(primitiveClass(N)) = N .
+
+
+endfm

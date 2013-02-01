@@ -1,0 +1,19 @@
+fmod APP-PROPERTY-CREATION is
+	pr BASE-CREATION .
+	pr APP-PROPERTY .
+	
+	vars N T CN PN A B : Qid .
+	var D : String .
+  	vars M ID Q : Bool .
+	
+	eq updateName(A, property(N, T, D, CN, PN, M, ID)) =  property(A, T, D, CN, PN, M, ID) .
+		
+	op setPropertyMandatoryTo : Property Bool -> Property .
+	eq setPropertyMandatoryTo(property(N, T, D, CN, PN, M, ID), Q) = property(N, T, D, CN, PN, Q, ID) .
+	
+	op setPropertyIdTo : Property Bool -> Property .
+	eq setPropertyIdTo(property(N, T, D, CN, PN, M, ID), Q) = property(N, T, D, CN, PN, M, Q) .
+	
+	op setOppositePropertyOfTo : Property Qid Qid -> Property .
+	eq setOppositePropertyOfTo(property(N, T, D, CN, PN, M, ID), A, B) = property(N, T, D, A, B, M, ID) .
+endfm

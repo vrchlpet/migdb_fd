@@ -1,0 +1,34 @@
+fmod APP-PROPERTY is
+	pr STRING .
+	pr BASE-EXTENDED .
+	pr APP-REFERENCE .
+	
+  	sorts Property PropertySequence .
+	subsort Property < Element .
+	subsort Property < PropertySequence < ElementSequence < NeList{Element} .
+
+---	name of property, name of type class, default value, oposite property reference, is mandatory, is ID 
+  	op property : Qid Qid String Reference Bool Bool -> Property [ctor] .
+
+	op __ : PropertySequence PropertySequence -> PropertySequence [ctor ditto] .
+
+  	op name : Property -> Qid .
+  	op type : Property -> Qid .
+  	op getDefaultValue : Property -> String .
+  	op getReferenceToOpposite : Property -> Reference .
+  	op isMandatory : Property -> Bool .
+   	op isId : Property -> Bool .
+
+  	vars N T : Qid .
+	var R : Reference .
+	var D : String .
+  	vars M ID : Bool .
+  
+  	eq name(property(N, T, D, R, M, ID)) = N .
+	eq type(property(N, T, D, R, M, ID)) = T .
+  	eq getDefaultValue(property(N, T, D, R, M, ID)) = D .
+  	eq getReferenceToOpposite(property(N, T, D, R, M, ID)) = R .
+	eq isMandatory(property(N, T, D, R, M, ID)) = M .
+ 	eq isId(property(N, T, D, R, M, ID)) = ID .
+
+endfm

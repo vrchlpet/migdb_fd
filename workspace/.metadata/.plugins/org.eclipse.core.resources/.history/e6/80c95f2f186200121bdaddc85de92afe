@@ -1,0 +1,21 @@
+(omod APP-PRIMITIVE-CLASS is
+
+	pr BASE .
+	pr MODEL-ENTITY .
+
+	subclass PrimitiveClass < ModelEntity .
+	
+	msg setPrimitiveType : Oid PrimitiveType -> Msg .
+	
+	
+	var M : Oid .
+	var PT : PrimitiveType .
+	var S : String .
+	var Q : Qid . 
+	
+	rl [setPrimitiveType] : setPrimitiveType(M, PT) < M : PrimitiveClass | > => < M : PrimitiveClass | primitiveType : PT > .
+	
+	op createPrimitiveCLass : Qid String PrimitiveType -> Object .
+	eq createPrimitiveClass(Q, S, PT) = < Q : PrimitiveClass | name : S, primitiveType : PT > .
+	
+endom)

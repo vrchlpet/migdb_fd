@@ -1,0 +1,23 @@
+(omod EMBEDDED-PROPERTY is
+	
+	pr PROPERTY .
+	pr PRIMITIVE-CLASS .
+	
+	sort EmbeddedPropertyId .
+	subsort EmbeddedPropertyId < Oid .
+	
+	class EmbeddedProperty | isMandatory : BooleanId, type : PrimitiveClassId .
+	subclass EmbeddedProperty < Property .
+	
+	msg isMandatory : EmbeddedPropertyId -> Msg .
+	msg getType : EmbeddedPropertyId -> Msg .
+	
+	var P : MultipliablePropertyId .
+	var PCI : PrimitiveClassId .
+	var B : BooleanId .
+	var BB : Bool .
+	
+	rl [isMandatory] : isMandatory(P) < P : EmbeddedProperty | isMandatory : B > < B : Boolean | value : BB > => < B : Boolean | value : BB > .
+	rl [getType] : getType(P) < P : EmbeddedProperty | type : PCI > < PCI : PrimitiveClass | > => < PCI : PrimitiveClass | > .
+
+endom)

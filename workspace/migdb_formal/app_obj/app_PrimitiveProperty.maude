@@ -1,0 +1,13 @@
+(omod PRIMITIVE-PROPERTY is
+	
+	pr MULTIPLIABLE-PROPERTY .
+	
+	sort PrimitivePropertyId .
+	subsort PrimitivePropertyId < Oid .
+	
+	
+	class PrimitiveProperty | primitiveType : PrimitiveTypeId .
+	subclass PrimitiveProperty < MultipliableProperty .
+	
+
+endom)

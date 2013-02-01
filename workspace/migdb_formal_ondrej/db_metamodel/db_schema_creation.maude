@@ -1,0 +1,72 @@
+load db_schema.maude .
+load ../model_base_creation.maude .
+load db_primarykey_creation.maude .
+load db_foreignkey_creation.maude .
+load db_column_creation.maude .
+load db_table_creation.maude .
+
+fmod SCHEMA-CREATION is	
+	pr SCHEMA .
+	pr TABLE-CREATION .
+		
+	var A B D : Qid .	
+	var S : Schema .
+	vars T : Table .
+	var TS : TableSequence .
+	var C : Column . 
+	var P : PrimaryKey . 
+	var FK : ForeignKey .
+	
+--- UPDATES
+	op updateTableName : Qid Qid Schema -> Schema .
+	ceq updateTableName(A, B, S) = S if not exists(A, getTables(S)) or exists(B, getTables(S)) .
+	eq updateTableName(A, B, S) = schema(getOthersThan(A, getTables(S)) updateName(B, getByName(A, getTables(S)))) [owise] .
+	
+	op updateColumnNameInTable : Qid Qid Qid Schema -> Schema . --- table column newColumnName
+	ceq updateColumnNameInTable(A, B, D, S) = S if not exists(A, getTables(S)) .
+	eq updateColumnNameInTable(A, B, D, S) = schema(getOthersThan(A, getTables(S)) updateColumnName(B, D, getByName(A,  getTables(S)))) [owise] . 
+		
+	op updateFKNameInTable : Qid Qid Qid Schema -> Schema . --- table FK newFK
+	ceq updateFKNameInTable(A, B, D, S) = S if not exists(A, getTables(S)) .
+	eq updateFKNameInTable(A, B, D, S) = schema(getOthersThan(A, getTables(S)) updateFKName(B, D, getByName(A,  getTables(S)))) [owise] .
+	
+		
+--- ADD TABLE
+	op addTableToSchema : Table Schema -> Schema .
+	ceq addTableToSchema(T, S) = S if exists(name(T), getTables(S)) .
+	eq addTableToSchema(T, S) = schema(T getTables(S))  [owise] .
+
+--- ADD COLUMN TO TABLE
+	op addColumnToTable : Schema Qid Column -> Schema .
+	eq addColumnToTable(S, A, ne) = S .
+	ceq addColumnToTable(S, A, C) = S if not exists(A, getTables(S)) .
+	eq addColumnToTable(S, A, C) = schema(getOthersThan(A, getTables(S)) addColumn(getByName(A, getTables(S)), C)) [owise] .
+	
+--- ADD FOREIGN KEY TO TABLE	
+	op addForeignKeyToTable : Qid ForeignKey Schema -> Schema .			--- table ID, FK, Schema
+	eq addForeignKeyToTable(A, ne, S) = S .
+	ceq addForeignKeyToTable(A, FK, S) = S if not exists(A, getTables(S)) or not exists(getReferencedTableName(FK), getTables(S))  .
+	eq addForeignKeyToTable(A, FK, S) =  schema(getOthersThan(A, getTables(S)) addForeignKey(getByName(A, getTables(S)), FK)) [owise] .
+
+--- REMOVE COLUMN FROM TABLE
+	op removeColumnInTable : Schema Qid Qid -> Schema .
+	ceq removeColumnInTable(S, A, B) = S if not exists(A, getTables(S)) .
+	eq removeColumnInTable(S, A, B) = schema(getOthersThan(A, getTables(S)) removeColumn(getByName(A, getTables(S)), B)) [owise] .
+
+--- REMOVE FK FROM TABLE
+	op removeFKInTable : Schema Qid Qid -> Schema .
+	ceq removeFKInTable(S, A, B) = S if not exists(A, getTables(S)) .
+	eq removeFKInTable(S, A, B) = schema(getOthersThan(A, getTables(S)) removeFK(getByName(A, getTables(S)), B)) [owise] .
+
+--- REMOVE TABLE
+	op removeTable : Schema Qid -> Schema . 
+	ceq removeTable(S, A) = S if not exists(A, getTables(S)) or not isReferenced(A, getTables(S)).
+	eq removeTable(S, A) = schema(getOthersThan(A, getTables(S))) [owise] .
+	
+--- helpers
+	op isReferenced : Qid TableSequence -> Bool .
+	eq isReferenced(A, ne) = false .
+	eq isReferenced(A, T) = isReferenced(A, getForeignKeys(T)) .
+	eq isReferenced(A, TS) = isReferenced(A, head(TS)) or isReferenced(A, tail(TS)) [owise] .
+	
+endfm

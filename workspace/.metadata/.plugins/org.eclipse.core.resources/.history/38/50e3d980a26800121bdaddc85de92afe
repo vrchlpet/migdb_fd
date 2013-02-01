@@ -1,0 +1,59 @@
+fmod BASE is
+
+	pr NAT .
+	pr QID .
+	pr BOOL .
+	pr STRING .
+	
+	sort Object .
+	
+	op null : -> Object [ctor] .
+
+	op _{_ : Object Object -> Object [ctor prec 33 gather (e E)] .
+	
+	sort AssociationProperty . subsort AssociationProperty < Object .
+	sort EmbaddedClass . subsort EmbaddedClass < Object .
+	sort EmbaddedProperty . subsort EmbaddedProperty < Object .
+	sort GeneralClass . subsort GeneralClass < Object .
+	sort ModelEntity . subsort ModelEntity < Object .
+	sort MultipliableProperty . subsort MultipliableProperty < Object .
+	sort PrimitiveClass . subsort PrimitiveClass < Object .
+	sort PrimitiveProperty . subsort PrimitiveProperty < Object .
+	sort Property . subsort Property < Object .
+	sort StandardClass . subsort StandardClass < Object .
+	
+	
+	sort PrimitiveType .
+	op APPINT APPBOOL : -> PrimitiveType [ctor] .
+	
+	
+	vars S1 : String .
+	
+	op modelEntity : String -> ModelEntity [ctor] .
+	op newModelEntity : String -> ModelEntity .
+	eq newModelEntity(S1) = modelEntity(S1){null .
+	
+	op primitiveClass : String PrimitiveType -> PrimitiveClass [ctor] .
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		

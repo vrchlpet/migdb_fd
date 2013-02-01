@@ -1,0 +1,39 @@
+(omod BASE is
+	
+	inc NAT .
+	inc BOOL .
+	inc STRING .
+	
+	sorts PrimitiveType Value InheritanceType .
+	subsorts Nat Bool String < Value < Msg . 
+	
+	ops int boolean double char string : -> PrimitiveType .
+	ops joined tablePerClass SimpleTable : -> InheritanceType .
+
+	class AbstractField | type : PrimitiveType, value : Value .
+	
+	class IntegerF | type : int, value : Nat .
+	class BooleanF | type : boolean, value : Bool .
+	class StringF | type : String, value : String .
+	
+	subclasses ItegerF BooleanF StringF < AbstractField .
+	
+	msg value : Oid -> Msg .
+	
+	var O : Oid .
+	var V : Value .
+	var PT : PrimitiveType .
+	
+---	rl [val] : value(O) < O : AbstractField | type : PT, value : V > => V .
+
+endom)
+
+(omod BASE-EXTENDED is
+	pr BASE .
+	
+	pr QID .
+	
+	subsort Qid < Oid .
+
+endom)
+

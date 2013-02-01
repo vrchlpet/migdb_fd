@@ -1,0 +1,46 @@
+fmod APP-CLASS-CREATION is
+	pr BASE-CREATION .
+	pr APP-CLASS .
+	pr APP-PROPERTY-CREATION .
+	
+	pr APP-ABSTRACT-CLASS-CREATION .
+	
+	subsort Class < AbstractClass .
+	
+	vars N P Q B : Qid .
+  	var PS : PropertySequence .
+  	vars A E : Bool .
+  	vars IT IT2 : InheritanceType .
+	var C : Class .
+	var PR : Property .
+	
+	eq updateName(Q, class(N, PS, A, P, IT)) =  class(Q, PS, A, P, IT) .
+	
+	op setClassAbstractTo : Class Bool -> Class .
+	eq setClassAbstractTo(class(N, PS, A, P, IT), E) = class(N, PS, E, P, IT) .
+	
+	op setClassInheritanceType : Class InheritanceType -> Class .
+	eq setClassInheritanceType(class(N, PS, A, P, IT), IT2) = class(N, PS, A, P, IT2) .
+	
+	
+	eq addProperty(C, ne) = C .
+	ceq addProperty(C, PR) = C if exists(name(PR), getProperties(C)) .
+	eq addProperty(C, PR) = class(name(C), getProperties(C) PR, isAbstract(C), getParent(C), getInheritanceType(C)) [owise] .
+	
+	
+	ceq renameProperty(C, P, B) = C if exists(B, getProperties(C)) or not exists(P, getProperties(C)).
+	eq renameProperty(C, P, B) = class(name(C), getOthersThan(P, getProperties(C)) updateName(B, getByName(P, getProperties(C))), isAbstract(C), getParent(C), getInheritanceType(C)) [owise] .
+	
+
+	ceq setPropertyMandatoryTo(C, P, E) = C if not exists(P, getProperties(C)).
+	eq setPropertyMandatoryTo(C, P, E) = class(name(C), getOthersThan(P, getProperties(C)) setPropertyMandatoryTo(getByName(P, getProperties(C)), E), isAbstract(C), getParent(C), getInheritanceType(C)) [owise] .
+	
+	
+	ceq setPropertyIdTo(C, P, E) = C if not exists(P, getProperties(C)).
+	eq setPropertyIdTo(C, P, E) = class(name(C), getOthersThan(P, getProperties(C)) setPropertyIdTo(getByName(P, getProperties(C)), E), isAbstract(C), getParent(C), getInheritanceType(C)) [owise] .
+	
+
+	ceq setOppositePropertyOfTo(C, P, Q, B) = C if not exists(P, getProperties(C)).
+	eq setOppositePropertyOfTo(C, P, Q, B) = class(name(C), getOthersThan(P, getProperties(C)) setOppositePropertyOfTo(getByName(P, getProperties(C)), Q, B), isAbstract(C), getParent(C), getInheritanceType(C)) [owise] .
+
+endfm

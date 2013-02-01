@@ -1,0 +1,17 @@
+fmod PRIMITIVE_TYPE is
+	pr BASE .
+	pr BASE_EXTENDED .
+	
+	sorts PrimitiveType PrimitiveTypeSequence .
+	subsort PrimitiveType < Element .
+	subsort PrimitiveType < PrimitiveTypeSequence < ElementSequence < NeList{Element} .
+	
+	op string : -> PrimitiveType [ctor] .
+	op int : -> PrimitiveType [ctor] .
+	op byte : -> PrimitiveType [ctor] .
+	op double : -> PrimitiveType [ctor] .
+	op char : -> PrimitiveType [ctor] .
+	op boolean : -> PrimitiveType [ctor] .
+	op long : -> PrimitiveType [ctor] .
+
+endfm

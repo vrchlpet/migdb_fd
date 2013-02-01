@@ -1,0 +1,25 @@
+load ../../instances/database_creation.maude
+
+red hasAllCols(content('a, "a"), ne) == false .
+red isValid(row(keyContent('Id, 1), content('a, "A"), nil), ne) == false .
+
+red hasAllFKs(keyContent('b, 1), ne) == false .
+red hasAllFKs(keyContent('b, 1), foreignKey('b, 't)) == true .
+red isValid(row(keyContent('Id, 1), content('a, "A"), keyContent('b, 1)), table('t, primaryKey('Id), column('a, DBCHAR), foreignKey('b, 't))) .
+
+red database(ne, nil) == database(ne, nil) .
+red addSchema(schema(ne), database(ne, nil)) == database(schema(ne), nil) .
+red addSchema(schema(ne), database(schema(table('a, primaryKey('Id), ne, ne)), nil)) == inconsistDatabase(schema(table('a, primaryKey('Id), ne, ne)), nil) .
+red addSchema(schema(table('a, primaryKey('Id2), ne, ne)), database(schema(table('a, primaryKey('Id), ne, ne)), nil)) == inconsistDatabase(schema(table('a, primaryKey('Id), ne, ne)), nil) .
+
+red addTable(table('t, primaryKey('Id), ne, ne), addSchema(schema(ne), database(ne, nil))) == database(schema(table('t, primaryKey('Id), ne, ne)), storage('t, nil)) .
+
+red insertI('t, row(keyContent('Id, 1), nil, nil), database(schema(table('t, primaryKey('Id), ne, ne)), storage('t, nil)))  == database(schema(table('t, primaryKey('Id), ne, ne)), storage('t, row(keyContent('Id, 1), nil, nil))) .
+red insertI('t, row(keyContent('Id, 1), content('a, "a"), nil), database(schema(table('t, primaryKey('Id), ne, ne)), storage('t, nil))) == inconsistDatabase(schema(table('t, primaryKey('Id), ne, ne)), storage('t, nil)) .
+red insertI('t, row(keyContent('Id, 1), content('a, "a"), nil), database(schema(table('t, primaryKey('Id), column('a, DBCHAR), ne)), storage('t, nil))) == database(schema(table('t, primaryKey('Id), column('a, DBCHAR), ne)), storage('t, row(keyContent('Id, 1), content('a, "a"), nil))) .
+
+red insertI('t, row(keyContent('Id, 1), content('a, "a"), keyContent('b, 1)), database(schema(table('t, primaryKey('Id), ne, ne)), storage('t, nil))) == inconsistDatabase(schema(table('t, primaryKey('Id), ne, ne)), storage('t, nil)) .
+
+red insertI('t, row(keyContent('Id, 1), content('a, "a"), keyContent('b, 1)), database(schema(table('t, primaryKey('Id), column('a, DBCHAR), foreignKey('b, 't))), storage('t, nil))) == database(schema(table('t, primaryKey('Id), column('a, DBCHAR), foreignKey('b, 't))), storage('t, row(keyContent('Id, 1), content('a, "a"), keyContent('b, 1)))) .
+
+red insertI('t, row(keyContent('Id, 1), content('a, "a"), keyContent('b, 1)), database(schema(table('t, primaryKey('Id), column('a, DBCHAR), foreignKey('b, 't))), storage('t, row(keyContent('Id, 1), content('a, "a"), keyContent('b, 1))))) == inconsistDatabase(schema(table('t, primaryKey('Id), column('a, DBCHAR), foreignKey('b, 't))), storage('t, row(keyContent('Id, 1), content('a, "a"), keyContent('b, 1)))) .

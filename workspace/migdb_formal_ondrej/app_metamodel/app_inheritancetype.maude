@@ -1,0 +1,9 @@
+fmod APP-INHERITANCE-TYPE is
+	pr BASE .
+
+	sort InheritanceType .
+	subsort Ne < InheritanceType .
+
+	ops Joined TablePerClass SingleTable : -> InheritanceType [ctor] .
+
+endfm

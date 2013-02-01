@@ -1,0 +1,18 @@
+fmod APP-EMBEDDED-CLASS is
+  	pr APP-CLASS .
+
+  	sorts EmbeddedClass .
+  	subsort EmbeddedClass < Class .
+
+--- name, list of properties, is abstract, name of parent, type of hierarchy
+  	op embeddedClass :  Qid PropertySequence -> Class [ctor] .
+
+  	var N : Qid .
+  	var PS : PropertySequence .
+ 
+	eq name(embeddedClass(N, PS)) = N .
+
+  	op getProperties : Class -> PropertySequence .
+	eq getProperties(embeddedClass(N, PS)) = PS .
+
+endfm

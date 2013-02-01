@@ -1,0 +1,22 @@
+fmod STORAGE is
+	pr LIST{Row} .
+	
+	sort Storage .
+	
+	--- table name, list of rows
+	op storage : Qid List{Row} -> Storage [ctor] .
+	
+	var Q : Qid .
+	var RS : List{Row} .
+	
+	op name : Storage -> Qid .
+	eq name(storage(Q, RS)) = Q .
+	
+	op rows : Storage -> List{Row} .
+	eq rows(storage(Q, RS)) = RS .
+
+endfm
+
+view Storage from TRIV to STORAGE is
+	sort Elt to Storage .
+endv

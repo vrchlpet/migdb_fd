@@ -1,0 +1,6 @@
+fmod BASE-CREATION is
+	pr BASE .
+
+	op updateName : Qid Element -> Element .
+	
+endfm

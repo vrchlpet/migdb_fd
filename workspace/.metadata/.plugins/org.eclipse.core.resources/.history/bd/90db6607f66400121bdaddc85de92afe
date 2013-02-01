@@ -1,0 +1,128 @@
+(omod STRUCTURE is
+	
+	pr BASE .
+	
+	msg addEntity : Oid Oid -> Msg .
+
+	var M N : Oid .
+	var OS : OidSeq .
+
+	rl [addEntity] : addEntity(M, N) < M : Structure | entities : OS > < N : ModelEntity | > => < M : Structure | entities : N OS > < N : ModelEntity | > .
+	
+	
+	----------------- OPERATIONS ---------------------
+
+	vars O1 O2 : Oid .
+	vars S1 S2 : String .
+	vars B1 B2 : Bool .
+	vars IT1 IT2 : InheritanceType .
+	vars C1 C2 : Configuration .
+	var OS1 : OidSeq .
+	var PT : PrimitiveType .
+	var C : Cid .
+	var A1 A2 : Attribute .
+	var AS : AttributeSet .
+	var O : Object .
+	
+	---eq C1 none = C1 .
+	---eq none C1 = C1 .
+	
+	op equals : Object Attribute -> Bool .
+	eq equals(< O1 : C | none >, A2) = false .
+	ceq equals(< O1 : C | A1, AS >, A2) = true if A1 == A2 .
+	eq equals(< O1 : C | A1, AS >, A2) = equals(< O1 : C | AS >, A2) [owise] .
+	
+	op exists : Configuration Attribute -> Bool .
+	eq exists(none, A1) = false .
+	ceq exists(O C1, A1) = true if equals(O, A1) == true .
+	eq exists(O C1, A1) = exists(C1, A1) [owise] .
+	
+	op existsOid : Configuration Oid -> Bool .
+	eq existOid(none, O1) = false .
+	ceq existOid(< O2 : C:Cid | AS > C1, O1) = true if O2 == O1 .
+	eq existsOid(< O2 : C:Cid | AS > C1, O1) = existsOid(C1, O1) [owise] .
+	
+	--- TODO : kontrola existence objektu s danym Oid
+	
+--- structure 	name	isabstract	interitancetype
+	msg addAbstractClass : Oid String Bool InheritanceType -> Msg .
+			
+--- structure	name	primitivetype
+	msg addPrimitiveClass : Oid Oid String PrimitiveType -> Msg .
+	crl [addPrimitiveClass] : addPrimitiveClass(O1,O2,S1,PT) < O1 : Structure | entities : OS1 > C1 => < O1 : Structure | entities : OS1 > C1 if exists(C1, name : S1) == true .
+	rl [addPrimitiveClass] : addPrimitiveClass(O1,O2,S1,PT) < O1 : Structure | entities : OS1 > C1 => < O1 : Structure | entities : O2 OS1 > < O2 : PrimitiveClass | name : S1, primitiveType : PT > C1 [owise] .
+	
+--- structure	name
+	msg addEmbaddedClass : Oid Oid String -> Msg .
+	rl [addEmbaddedClass] : addEmbaddedClass(O1, O2, S1) < O1 : Structure | entities : OS1 > => < O1 : Structure | entities : O2 OS1 > < O2 : EmbaddedClass | name : S1 > .
+	
+--- structure	name	newName
+	msg renameEntity : String String -> Msg .
+	rl [renameEntity] : renameEntity(S1, S2) < O1 : ModelEntity | name : S1 > => < O1 : ModelEntity | name : S2 > .
+	
+--- structure name
+	msg removeEntity : Oid String -> Msg .
+	rl [removeEntity] : removeEntity(O1, S1) < O1 : Structure | entities : O2 OS1 > < O2 : ModelEntity | name : S1 > => < O1 : Structure | entities : OS1 > . 
+	
+--- structure	owningClassName	name	type	defValue	lBound	uBound	ordered	unique
+	msg addAttribute : Oid String String String String Nat Nat Bool Bool -> Msg .
+	
+	
+--- structure	className	name	newName
+	msg renameProperty : Oid String String String -> Msg .
+	
+--- structure	className	name
+	msg removeProperty : Oid String String -> Msg .
+
+--- structure	firstClassName	firstPropName	secondClassName secondPropName isOpposite
+	msg setOpposite : Oid String String String String Bool -> Msg .
+	
+--- structure className	isAbstract
+	msg setAbstract : Oid String Bool -> Msg .
+	
+--- structure childName parentName
+	msg setParent : Oid String String -> Msg .
+	
+--- struture owningClassName	attName	type
+	msg setType : Oid String String String -> Msg .
+	
+--- structure	owningCLassName	propName	lBound	uBound
+	msg setBounds : Oid String String Nat Nat -> Msg .
+	
+--- structure	owningClassName	propName	isOrderd
+	msg setOrdered : Oid String String Bool -> Msg .
+	
+--- structure	owningClassName	propName	isunique
+	msg setUnique : Oid String String Bool -> Msg .
+	
+--- structure	owningClassName	propName	targetClassName	mergeType
+	msg copyProperty : Oid String String String -> Msg .
+	
+--- structure	owningClassName	propName	targetClassName	mergeType
+	msg moveProperty : Oid String String String -> Msg .
+	
+
+
+
+	
+
+endom)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

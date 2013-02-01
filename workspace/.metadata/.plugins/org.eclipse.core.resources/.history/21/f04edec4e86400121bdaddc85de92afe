@@ -1,0 +1,22 @@
+load base.maude .
+
+load app_Property.maude .
+load app_ModelEntity.maude .
+load app_PrimitiveClass.maude .
+load app_EmbaddedProperty.maude .
+load app_MultipliableProperty.maude .
+load app_EmbaddedClass.maude .
+load app_PrimitiveProperty.maude .
+load app_StandardClass.maude .
+load app_AssociationProperty.maude .
+load app_Structure.maude .
+
+
+(rew < 'struct : Structure | entities : ne > addPrimitiveClass('struct, 'primCls, "primCLs", APPINT) .)
+(rew < 'struct : Structure | entities : ne > addEmbaddedClass('struct, 'embCls, "embCls") .)
+(rew < 'struct : Structure | entities : 'primCls > < 'primCls : PrimitiveClass | name : "primCls", primitiveType : APPCHAR > renameEntity("primCls","primCls2") .)
+(rew < 'struct : Structure | entities : 'primCls 'embCls > < 'primCls : PrimitiveClass | name : "primCls", primitiveType : APPCHAR > < 'embCls : EmbaddedClass | name : "embCls", idProperty : 'idProp, embaddedProperties : ne > removeEntity('struct,"primCls") .)
+
+(rew exists(< 'struct : Structure | entities : 'primCls 'embCls > < 'primCls : PrimitiveClass | name : "primCls", primitiveType : APPCHAR > < 'embCls : EmbaddedClass | name : "embCls", idProperty : 'idProp, embaddedProperties : ne >, EmbaddedClass, name : "embCls2" 	) .)
+
+

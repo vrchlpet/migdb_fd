@@ -1,0 +1,7 @@
+(omod MODEL-ENTITY is
+	
+	pr BASE-EXTENDED .
+	
+	class ModelEntity | name : StringF .
+	
+endom)

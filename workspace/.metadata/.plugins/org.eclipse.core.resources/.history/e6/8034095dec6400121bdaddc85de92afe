@@ -1,0 +1,75 @@
+load ../db_metamodel.maude
+
+red dbModel('A, ne) == dbModel('A, ne) .
+red schema('B, ne) == schema('B, ne) .
+
+red addSchema(dbModel('A, ne),  schema('A, ne)) == dbModel('A, schema('A, ne)) .
+red addSchema(dbModel('A, schema('B, ne)), schema('A, ne)) == dbModel('A,(schema('A, ne) schema('B, ne))) .
+red addSchema(dbModel('A, schema('B, ne)), schema('B, ne)) == dbModel('A, schema('B, ne)) .
+red addSchema(dbModel('A,(schema('B, ne) schema('C, ne))), schema('B, ne)) == dbModel('A, (schema('B, ne) schema('C, ne))) .
+red addSchema(dbModel('A,(schema('B, ne) schema('C, ne))), schema('A, ne)) == dbModel('A,(schema('A, ne) schema('B, ne) schema('C, ne))) .
+red addSchema(dbModel('A, schema('B, ne)), schema('B, table('T, primaryKey('Id), ne, ne))) == dbModel('A, schema('B, ne)) .
+
+red addTable(dbModel('A, schema('B, ne)), 'B, ne) == dbModel('A, schema('B, ne)) .
+red addTable(dbModel('A, schema('B, ne)), 'B, table('T, primaryKey('Id), ne, ne)) == dbModel('A, schema('B, table('T, primaryKey('Id), ne, ne))) .
+red addTable(dbModel('A, schema('B, table('T, primaryKey('Id), ne, ne))), 'B, table('T2, primaryKey('Id), ne, ne)) == dbModel('A, schema('B,(table('T2, primaryKey('Id), ne, ne) table('T, primaryKey('Id), ne, ne)))) .
+red addTable(dbModel('A, schema('B, table('T, primaryKey('Id), ne, ne))), 'B, table('T, primaryKey('Id), ne, ne)) ==  dbModel('A, schema('B, table('T, primaryKey('Id), ne, ne))) .
+red addTable(dbModel('A, schema('B, table('T, primaryKey('Id), ne, ne))), 'B, table('T, primaryKey('Id2), ne, ne)) == dbModel('A, schema('B, table('T, primaryKey('Id), ne, ne))) .
+
+red addColumn(table('A, primaryKey('Id), ne, ne), column('a, DBCHAR)) == table('A, primaryKey('Id), column('a, DBCHAR), ne) .
+red addColumn(table('A, primaryKey('Id), column('a, DBCHAR), ne), column('a, DBCHAR)) == table('A, primaryKey('Id), column('a, DBCHAR), ne) .
+red addColumn(table('A, primaryKey('Id), column('a, DBCHAR), ne), column('a, DBINT)) == table('A, primaryKey('Id), column('a, DBCHAR), ne) .
+red addColumn(table('A, primaryKey('Id), column('a, DBCHAR), ne), column('b, DBCHAR)) == table('A, primaryKey('Id),(column('b, DBCHAR) column('a, DBCHAR)), ne) .
+red  addColumnToTable(schema('A, ne), 'A, column('a, DBCHAR)) == schema('A, ne) .
+red addColumnToTable(schema('A, table('A, primaryKey('Id), ne, ne)), 'A, column('c, DBCHAR)) == schema('A, table('A, primaryKey('Id), column('c, DBCHAR), ne)) .
+red addColumnToTable(schema('A, table('A, primaryKey('Id), column('c, DBCHAR), ne)), 'A, column('b, DBCHAR)) == schema('A, table('A, primaryKey('Id), (column('b, DBCHAR) column('c, DBCHAR)), ne)) .
+red addColumn(dbModel('A,(schema('B,(table('T, primaryKey('Id), (column('a, DBCHAR) column('b, DBINT)), ne))))), 'B, 'T, column('c, DBBOOL)) == dbModel('A, schema('B, table('T, primaryKey('Id), (column('c, DBBOOL) column('a, DBCHAR) column('b, DBINT)), ne))) .
+red addColumn(dbModel('A,(schema('B,(table('T, primaryKey('Id), (column('a, DBCHAR) column('b, DBINT)), ne))))), 'B, 'Q, column('c, DBBOOL)) == dbModel('A, schema('B, table('T, primaryKey('Id), (column('a, DBCHAR) column('b, DBINT)), ne))) .
+red addColumn(dbModel('A,(schema('B,(table('T, primaryKey('Id), (column('a, DBCHAR) column('b, DBINT)), ne))))), 'Q, 'T, column('c, DBBOOL)) == dbModel('A, schema('B, table('T, primaryKey('Id), (column('a, DBCHAR) column('b, DBINT)), ne))) .
+
+red addForeignKey(table('T, primaryKey('Id), ne, ne), foreignKey('FK, 'A, 'A)) == table('T, primaryKey('Id), ne, foreignKey('FK, 'A, 'A)).
+red addForeignKey(table('T, primaryKey('Id), ne, foreignKey('FK, 'A, 'A)), foreignKey('FK, 'A, 'A)) == table('T, primaryKey('Id), ne, foreignKey('FK, 'A, 'A)).
+red addForeignKey(table('T, primaryKey('Id), ne, foreignKey('FK, 'A, 'A)), foreignKey('FK2, 'A, 'A)) == table('T, primaryKey('Id), ne, foreignKey('FK2, 'A, 'A) foreignKey('FK, 'A, 'A)) .
+red addForeignKeyToTable('T, foreignKey('A, 'A, 'A), schema('A, ne)) == schema('A, ne) .
+red addForeignKeyToTable('T, foreignKey('A, 'A, 'A), schema('A, table('A, primaryKey('Id), ne, ne))) == schema('A, table('A, primaryKey('Id), ne, ne)) .
+red addForeignKeyToTable('A, foreignKey('A, 'A, 'A), schema('A, table('A, primaryKey('Id), ne, ne))) == schema('A, table('A, primaryKey('Id), ne, foreignKey('A, 'A, 'A))) . 
+red addForeignKeyToTable('A, foreignKey('A, 'A, 'A), schema('A, table('A, primaryKey('Id), ne, ne)  table('B, primaryKey('Id), ne, ne))) == schema('A, table('B, primaryKey('Id), ne, ne) table('A, primaryKey('Id), ne, foreignKey('A, 'A, 'A))).
+
+red addForeignKey(dbModel('G, ne), 'B, 'T2, foreignKey('A, 'T, 'B)) == dbModel('G, ne) .
+red addForeignKey(dbModel('G, schema('B, ne)), 'B, 'T2, foreignKey('A, 'T, 'B)) == dbModel('G, schema('B, ne)) .
+red addForeignKey(dbModel('G, schema('B, table('T, primaryKey('Id), ne, ne))), 'B, 'T2, foreignKey('A, 'T, 'B)) == dbModel('G, schema('B, table('T, primaryKey('Id), ne, ne))).
+red addForeignKey(dbModel('G, schema('B, table('T, primaryKey('Id), ne, ne))), 'B, 'T, foreignKey('A, 'T, 'B)) == dbModel('G, schema('B, table('T, primaryKey('Id), ne, foreignKey('A, 'T, 'B)))) .
+red addForeignKey(dbModel('G, schema('B, table('T1, primaryKey('Id), ne, ne))), 'B, 'T, foreignKey('A, 'T, 'B)) == dbModel('G, schema('B, table('T1, primaryKey('Id), ne, ne))) .
+red addForeignKey(dbModel('G, schema('B, table('T, primaryKey('Id), ne, ne) table('T2, primaryKey('Id), ne, ne))), 'B, 'T, foreignKey('A, 'T, 'B)) == dbModel('G, schema('B, table('T2, primaryKey('Id), ne, ne) table('T, primaryKey('Id), ne, foreignKey('A, 'T, 'B)))) .
+
+
+red updateName('a, column('b, DBINT)) == column('a, DBINT) .
+red updateName('a, foreignKey('b, 'b, 'b)) == foreignKey('a, 'b, 'b) .
+red updateName('a, primaryKey('b)) == primaryKey('a) . 
+red updateName('a, table('b, primaryKey('ID), ne, ne)) == table('a, primaryKey('ID), ne, ne) .
+red updateName('a, schema('b, ne)) == schema('a, ne) .
+
+red updateSchemaName(dbModel('a, schema('b, ne)), 'b, 'a) == dbModel('a, schema('a, ne)) . 
+red updateSchemaName(dbModel('a, schema('b, ne) schema('c, ne)), 'b, 'a) == dbModel('a, schema('c, ne) schema('a, ne)) . 
+red updateSchemaName(dbModel('a, schema('b, ne) schema('c, ne)), 'b, 'c) == dbModel('a, schema('b, ne) schema('c, ne)) .
+red updateSchemaName(dbModel('a, ne), 'a, 'b) == dbModel('a, ne) . 
+
+red updateTableNameInSchema(dbModel('a, ne), 'a, 'b, 'c) == dbModel('a, ne) .
+red updateTableNameInSchema(dbModel('a, schema('b, ne)), 'a, 'a, 'b) == dbModel('a, schema('b, ne)) .
+red updateTableNameInSchema(dbModel('a, schema('b, table('t, primaryKey('Id), ne, ne))), 'b, 't, 'a) == dbModel('a, schema('b, table('a, primaryKey('Id), ne, ne))) . 
+red updateTableNameInSchema(dbModel('a, schema('b, table('t, primaryKey('Id), ne, ne) table('a, primaryKey('Id), ne, ne))), 'b, 't, 'a) == dbModel('a, schema('b, table('t, primaryKey('Id), ne, ne) table('a, primaryKey('Id), ne, ne))) .
+
+red updateColumnNameInTableInSchema(dbModel('m, schema('s, ne)), 's, 't, 'c, 'nc) == dbModel('m, schema('s, ne)) .
+red updateColumnNameInTableInSchema(dbModel('m, schema('s, table('t, primaryKey('Id), ne, ne))), 's, 't, 'c, 'nc) == dbModel('m, schema('s, table('t, primaryKey('Id), ne, ne))) .
+red updateColumnNameInTableInSchema(dbModel('m, schema('s, table('t, primaryKey('Id), column('d, DBINT), ne))), 's, 't, 'c, 'nc) == dbModel('m, schema('s, table('t, primaryKey('Id), column('d, DBINT), ne))) .
+red updateColumnNameInTableInSchema(dbModel('m, schema('s, table('t, primaryKey('Id), column('c, DBINT), ne))), 's, 't, 'c, 'nc) == dbModel('m, schema('s, table('t, primaryKey('Id), column('nc, DBINT), ne))) .
+red updateColumnNameInTableInSchema(dbModel('m, schema('s, table('t, primaryKey('Id), column('c, DBINT) column('q, DBINT), ne))), 's, 't, 'c, 'nc) == dbModel('m, schema('s, table('t, primaryKey('Id), column('q, DBINT) column('nc,
+    DBINT), ne))) .
+
+red updateFKNameInTableInSchema(dbModel('m, schema('s, ne)), 's, 't, 'c, 'nc) ==  dbModel('m, schema('s, ne)) .
+red updateFKNameInTableInSchema(dbModel('m, schema('s, table('t, primaryKey('Id), ne, ne))), 's, 't, 'c, 'nc) == dbModel('m, schema('s, table('t, primaryKey('Id), ne, ne))) .
+red updateFKNameInTableInSchema(dbModel('m, schema('s, table('t, primaryKey('Id), column('d, DBINT), foreignKey('q, 'a, 'b)))), 's, 't, 'c, 'nc) == dbModel('m, schema('s, table('t, primaryKey('Id), column('d, DBINT), foreignKey('q, 'a, 'b)))) .
+red updateFKNameInTableInSchema(dbModel('m, schema('s, table('t, primaryKey('Id), column('d, DBINT), foreignKey('c, 'a, 'b)))), 's, 't, 'c, 'nc) == dbModel('m, schema('s, table('t, primaryKey('Id), column('d, DBINT), foreignKey('nc, 'a, 'b)))) .
+red updateFKNameInTableInSchema(dbModel('m, schema('s, table('t, primaryKey('Id), column('d, DBINT) column('q, DBINT), foreignKey('d, 'a, 'b) foreignKey('c, 'a, 'b)))), 's, 't, 'c, 'nc) == dbModel('m, schema('s, table('t, primaryKey('Id), column('d, DBINT) column('q,
+    DBINT), foreignKey('d, 'a, 'b) foreignKey('nc, 'a, 'b)))) .
+

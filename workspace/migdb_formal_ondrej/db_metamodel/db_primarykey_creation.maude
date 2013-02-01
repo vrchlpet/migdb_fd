@@ -1,0 +1,9 @@
+fmod PRIMARY-KEY-CREATION is
+	pr BASE-CREATION .
+	pr PRIMARY-KEY .
+	
+	var A B : Qid .
+
+	eq updateName(B, primaryKey(A)) = primaryKey(B) .
+	
+endfm

@@ -1,0 +1,35 @@
+fmod ROW-CREATION is
+	pr ROW .
+	pr TABLE .
+	pr LIST{Content} .
+	
+	var Conts : List{Content} .
+	var PKVal : KeyContent .
+	var FKVals : List{KeyContent} .
+	var T : Table .
+	var R : Row .
+	var Cols : ColumnSequence .
+	var FKs : ForeignKeySequence .
+	
+	---patří to sem nebo do Table nebo jinam?
+	op isValid : Row Table -> Bool .
+	eq isValid(R, ne) = false .
+	eq isValid(R, T) = getColumn(getKey(R)) == name(getPrimaryKey(T)) 
+						and hasAllCols(getContent(R), getColumns(T)) 
+						and hasAllFKs(getForeignKeys(R), getForeignKeys(T)) [owise] .
+	
+	
+	
+	---helpers
+	op hasAllCols : List{Content} ColumnSequence -> Bool .
+	ceq hasAllCols(Conts, Cols) = true if Conts == nil and Cols == ne .
+	ceq hasAllCols(Conts, Cols) =  false if size(Conts) =/= size(Cols) .
+	eq hasAllCols(Conts, Cols) = exists(getColumn(head(Conts)), Cols) and hasAllCols(tail(Conts), getOthersThan(getColumn(head(Conts)), Cols)) .
+	
+	op hasAllFKs : List{KeyContent} ForeignKeySequence -> Bool .
+	ceq hasAllFKs(FKVals, FKs) = true if FKVals == nil and FKs == ne .
+	ceq hasAllFKs(FKVals, FKs) =  false if size(FKVals) =/= size(FKs) .
+	eq hasAllFKs(FKVals, FKs) = exists(getColumn(head(FKVals)), FKs) and hasAllFKs(tail(FKVals), getOthersThan(getColumn(head(FKVals)), FKs)) .
+	
+			
+endfm

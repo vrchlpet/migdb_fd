@@ -1,0 +1,19 @@
+(omod PROPERTY is
+
+	pr QID .
+	
+	subsort Qid < Oid .
+	---subsort Nat < Msg .
+	
+	class Property | name : Qid .
+
+	---msg getName : Oid -> Msg .
+	msg setProperty : Oid Qid -> Msg .
+
+
+	var M N O : Oid .
+	var S R : Qid .
+
+	---rl [getName] : getName(M) < M : Property | name : S > => S .
+	rl [setProperty] : setProperty(M, S) < M : Property | name : R > => < M : Property | name : S > .
+endom)

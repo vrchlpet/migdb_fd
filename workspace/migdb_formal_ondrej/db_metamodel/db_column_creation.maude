@@ -1,0 +1,12 @@
+fmod COLUMN-CREATION is
+	pr BASE-CREATION .
+	pr COLUMN .
+	
+	var A B : Qid .
+	var PT : DbPrimitiveType .
+
+	eq updateName(B, column(A, PT)) = column(B, PT) .
+	
+endfm
+	
+	--- TODO: casting

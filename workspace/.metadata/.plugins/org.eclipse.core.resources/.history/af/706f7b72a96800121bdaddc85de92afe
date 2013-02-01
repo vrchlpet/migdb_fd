@@ -1,0 +1,22 @@
+view PrimitiveType from TRIV to BASE is
+	sort Elt to PrimitiveType .
+endv
+
+fmod BASE is
+
+	sort List{PrimitiveType} .
+	sort PrimitiveType .
+	op INT BOOL NAT CHAR : -> PrimitiveType .
+	
+	var PT : PrimitiveType .
+	var PTL : List{PrimitiveType} .
+	
+	op add : PrimitiveType List{PrimitiveType} -> List{PrimitiveType} .
+	eq add(PT, PTL) = PT PTL .
+	
+
+endfm
+
+
+
+

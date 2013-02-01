@@ -1,0 +1,28 @@
+(omod MULTIPLIABLE-PROPERTY is
+	
+	pr PROPERTY .
+	
+	sort MultipliablePropertyId .
+	subsort MultipliablePropertyId < Oid .
+	
+	class MultipliableProperty | defaultValue : StringId, isOrdered : BooleanId, isUnique : BooleanId, lowerBound : IntegerId, upperBound : IntegerId .
+	subclass MultipliableProperty < Property .
+	
+	msg isOrdered : MultipliablePropertyId -> Msg .
+	msg isUnique : MultipliablePropertyId -> Msg .
+	msg getLowerBound : MultipliablePropertyId -> Msg .
+	msg getUpperBound : MultipliablePropertyId -> Msg .
+	
+	var P : MultipliablePropertyId .
+	var B : BooleanId .
+	var	I : IntegerId .
+	var Q : Qid .
+	var BB : Bool .
+	var II : Int .
+	
+	rl [isOrdered] : isOrdered(P) < P : Property | isOrdered : B > < B : Boolean | value : BB > => < B : Boolean | value : BB > .
+	rl [isUnique] : isUnique(P) < P : Property | isUnique : B > < B : Boolean | value : BB > => < B : Boolean | value : BB > .
+	rl [getLowerBound] : getLowerBound(P) < P : Property | lowerBound : I > < I : Integer | value : II > => < I : Integer | value : II > .
+	rl [getUpperBound] : getUpperBound(P) < P : Property | upperBound : I > < I : Integer | value : II > => < I : Integer | value : II > .
+
+endom)

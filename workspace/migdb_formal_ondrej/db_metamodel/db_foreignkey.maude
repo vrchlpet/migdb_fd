@@ -1,0 +1,25 @@
+fmod FOREIGN-KEY is
+	pr QID .
+	pr DB-PRIMITIVE-TYPE . 
+	pr BASE-EXTENDED .
+	
+	sorts ForeignKey ForeignKeySequence .
+	subsort Ne <  ForeignKey < Element .
+	subsort ForeignKey < ForeignKeySequence < ElementSequence < NeList{Element} . 
+	
+	--- name of FK, referenced table
+	op foreignKey : Qid Qid -> ForeignKey [ctor] .
+	op __ : ForeignKeySequence ForeignKeySequence -> ForeignKeySequence [ctor ditto] .
+
+	vars A B : Qid .
+	
+	eq name(foreignKey(A, B)) = A .
+	
+	op getFKType : ForeignKey -> DbPrimitiveType .
+	eq getFKType(foreignKey(A, B)) = DBINT .
+	
+	op getReferencedTableName : ForeignKey -> Qid .
+	eq getReferencedTableName(foreignKey(A, B)) = B .
+	
+endfm
+

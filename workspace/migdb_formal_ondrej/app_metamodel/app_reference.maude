@@ -1,0 +1,19 @@
+fmod APP-REFERENCE is
+	pr QID .
+	pr BASE-EXTENDED .
+	
+	sort Reference .
+	subsort Ne < Reference .
+	
+	--- name of class, name of table -> reference
+	op ref : Qid Qid -> Reference [ctor] .
+	
+	vars C P : Qid .
+	
+	op getClassName : Reference -> Qid .
+	eq getClassName(ref(C, P)) = C .	
+	
+	op getPropertyName : Reference -> Qid .
+	eq getPropertyName(ref(C, P)) = P .
+	
+endfm

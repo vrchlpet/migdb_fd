@@ -1,0 +1,17 @@
+(omod EMBADDED-PROPERTY is
+
+	pr PROPERTY .
+---	pr EMBADDED-CLASS .
+	pr PRIMITIVE-CLASS .
+	
+	sort EmbaddedPropertyOid .
+	subsort EmbaddedPropertyOid < Oid .
+	
+	class EmbaddedProperty | isMandatory : BooleanF, type : PrimitiveClassOid .
+--- class EmbaddedProperty | isMandatory : BooleanF, type : PrimitiveClassOid, owningClass : EmbaddedClassOid .	
+
+endom)
+
+(view EmbaddedPropertyOid from TRIV to EMBADDED-PROPERTY is
+	sort Elt to EmbaddedPropertyOid .
+endv)

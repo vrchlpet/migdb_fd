@@ -1,0 +1,37 @@
+fmod APP-EMBEDDED-CLASS-CREATION is
+	pr BASE-CREATION .
+	pr APP-EMBEDDED-CLASS .
+	pr APP-PROPERTY-CREATION .
+	pr APP-ABSTRACT-CLASS-CREATION .
+	
+	subsort EmbeddedClass < AbstractClass .
+	
+	var N A P Q B : Qid .
+  	var PS : PropertySequence .
+	var C : EmbeddedClass .
+	var PR : Property .
+ 	var E : Bool .
+
+	eq updateName(A, embeddedClass(N, PS)) =  embeddedClass(A, PS) .
+	
+	
+	eq addProperty(C, ne) = C .
+	ceq addProperty(C, PR) = C if exists(name(PR), getProperties(C)) .
+	eq addProperty(C, PR) = embeddedClass(name(C), getProperties(C) PR) [owise] .
+	
+
+	ceq renameProperty(C, P, B) = C if exists(B, getProperties(C)) or not exists(P, getProperties(C)).
+	eq renameProperty(C, P, B) = embeddedClass(name(C), getOthersThan(P, getProperties(C)) updateName(B, getByName(P, getProperties(C)))) [owise] .
+	
+	
+	ceq setPropertyMandatoryTo(C, P, E) = C if not exists(P, getProperties(C)).
+	eq setPropertyMandatoryTo(C, P, E) = embeddedClass(name(C), getOthersThan(P, getProperties(C)) setPropertyMandatoryTo(getByName(P, getProperties(C)), E)) [owise] .
+	
+
+	ceq setPropertyIdTo(C, P, E) = C if not exists(P, getProperties(C)).
+	eq setPropertyIdTo(C, P, E) = embeddedClass(name(C), getOthersThan(P, getProperties(C)) setPropertyIdTo(getByName(P, getProperties(C)), E)) [owise] .
+	
+	
+	ceq setOppositePropertyOfTo(C, P, Q, B) = C if not exists(P, getProperties(C)).
+	eq setOppositePropertyOfTo(C, P, Q, B) = embeddedClass(name(C), getOthersThan(P, getProperties(C)) setOppositePropertyOfTo(getByName(P, getProperties(C)), Q, B)) [owise] .
+endfm

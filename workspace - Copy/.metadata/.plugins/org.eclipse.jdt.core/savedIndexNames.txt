@@ -1,0 +1,1 @@
+INDEX VERSION 1.126+D:\skola\OI\diplomka2\repo\migdb_fd\workspace\.metadata\.plugins\org.eclipse.jdt.core

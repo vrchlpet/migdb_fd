@@ -1,0 +1,24 @@
+(omod STANDARD-CLASS is 
+
+	pr BASE .
+
+	subclass StandardClass < ModelEntity .
+
+	msg setInheritanceType : Oid InheritanceType -> Msg .
+	msg addProperty : Oid Oid -> Msg .
+	msg setAbstract : Oid Bool -> Msg .
+	msg setParent : Oid Oid -> Msg .
+	msg setIdProperty : Oid Oid -> Msg .
+	
+	var M N : Oid .
+	var B : Bool .
+	var I : InheritanceType .
+	var OidList : OidSeq .
+	
+	rl [setAbstract] : setAbstract(M, B) < M : StandardClass | > => < M : StandardClass | isAbstract : B > .
+	rl [addProperty] : addProperty(M, N) < M : StandardClass | properties : OidList > < N : MultipliableProperty | > => < M : StandardClass | properties : N OidList > < N : MultipliableProperty | > .
+	rl [setInheritanceType] : setInheritanceType(M, I) < M : StandardClass | > => < M : StandardClass | inheritanceType : I > .
+	rl [setIdProperty] : setIdProperty(M, N) < M : StandardClass | > < N : PrimitiveProperty | > => < M : StandardClass | idProperty : N > < N : PrimitiveProperty | > .
+	rl [setParent] : setParent(M, N) < M : StandardClass | > < N : StandardClass | > => < M : StandardClass | parent : N > < N : StandardClass | > .
+
+endom)

@@ -1,0 +1,12 @@
+(omod PRIMITIVE-CLASS is
+
+	pr BASE-EXTENDED .
+	pr MODEL-ENTITY .
+
+	sort primitiveClassOid .
+	subsort primitiveClassOid < Oid .
+
+	class PrimitiveClass | primitiveType : PrimitiveType .
+	subclass PrimitiveClass < ModelEntity .
+	
+endom)

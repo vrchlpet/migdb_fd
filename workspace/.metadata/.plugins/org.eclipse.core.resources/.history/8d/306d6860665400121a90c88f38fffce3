@@ -1,0 +1,41 @@
+load base.maude .
+
+load app_Property.maude .
+(rew < 'prop : Property | name : "name" > setName('prop, "name2") .)
+
+load app_ModelEntity.maude .
+(rew < 'entity : ModelEntity | name : "name" > setName('entity, "name2") .)
+
+load app_PrimitiveClass.maude .
+(rew < 'primitiveClass : PrimitiveClass | name : "primclassname", primitiveType : APPCHAR > setPrimitiveType('primitiveClass, APPINT) .)
+
+load app_EmbaddedProperty.maude .
+(rew < 'embaddedProp : EmbaddedProperty | isMandatory : true, type : 'a, owningClass : 'b, name : "embProp" > setMandatory('embaddedProp, false) .)
+
+load app_MultipliableProperty.maude .
+(rew < 'multProp : MultipliableProperty | name : "multProp", isOrdered : false, isUnique : false, lowerBound : 1, upperBound : 5, owningClass : 'ownCls > setOrdered('multProp, true) .)
+(rew < 'multProp : MultipliableProperty | name : "multProp", isOrdered : false, isUnique : false, lowerBound : 1, upperBound : 5, owningClass : 'ownCls > setUnique('multProp, true) .)
+(rew < 'multProp : MultipliableProperty | name : "multProp", isOrdered : false, isUnique : false, lowerBound : 1, upperBound : 5, owningClass : 'ownCls > setLowerBound('multProp, 2) .)
+(rew < 'multProp : MultipliableProperty | name : "multProp", isOrdered : false, isUnique : false, lowerBound : 1, upperBound : 5, owningClass : 'ownCls > setUpperBound('multProp, 10) .)
+(rew < 'multProp : MultipliableProperty | name : "multProp", isOrdered : false, isUnique : false, lowerBound : 1, upperBound : 5, owningClass : 'ownCls > setOwningClass('multProp, 'newOwnCls) .)
+
+load app_EmbaddedClass.maude .
+(rew < 'embCls : EmbaddedClass | name : "embCls", idProperty : 'idProp, embaddedProperties : ne > < 'embProp1 : EmbaddedProperty | isMandatory : true, type : 'a, owningClass : 'b, name : "embProp" > addEmbaddedProperty('embCls, 'embProp1) .)
+(rew < 'embCls : EmbaddedClass | name : "embCls", idProperty : 'idProp, embaddedProperties : ne > < 'embProp1 : EmbaddedProperty | isMandatory : true, type : 'a, owningClass : 'b, name : "embProp" > < 'embProp2 : EmbaddedProperty | isMandatory : true, type : 'a, owningClass : 'b, name : "embProp" > addEmbaddedProperty('embCls, 'embProp1) addEmbaddedProperty('embCls, 'embProp2) .)
+(rew < 'embCls : EmbaddedClass | name : "embCls", idProperty : 'idProp, embaddedProperties : ne > < 'embProp1 : EmbaddedProperty | isMandatory : true, type : 'a, owningClass : 'b, name : "embProp" > setIdProperty('embCls, 'embProp1) .) 
+
+load app_PrimitiveProperty.maude .
+(rew < 'primProp : PrimitiveProperty | name : "multProp", isOrdered : false, isUnique : false, lowerBound : 1, upperBound : 5, owningClass : 'ownCls, defaultValue : "defVal", type : 'primCls > < 'primCls1 : PrimitiveClass | name : "primclassname", primitiveType : APPCHAR > setType('primProp, 'primCls1) .)
+(rew < 'primProp : PrimitiveProperty | name : "multProp", isOrdered : false, isUnique : false, lowerBound : 1, upperBound : 5, owningClass : 'ownCls, defaultValue : "defVal", type : 'primCls > setDefaultValue('primProp, "newDefVal") .)
+
+load app_StandardClass.maude .
+(rew < 'stdCls : StandardClass | name : "stdCls", inheritanceType : APPSINGHLETABLE, properties : ne, isAbstract : false, parent : 'stdClsPar, idProperty : 'primProp > setAbstract('stdCls, true) .)
+(rew < 'stdCls : StandardClass | name : "stdCls", inheritanceType : APPSINGHLETABLE, properties : ne, isAbstract : false, parent : 'stdClsPar, idProperty : 'primProp > setInheritanceType('stdCls, APPJOINED) .)
+(rew < 'stdCls : StandardClass | name : "stdCls", inheritanceType : APPSINGHLETABLE, properties : ne, isAbstract : false, parent : 'stdClsPar, idProperty : 'primProp > < 'multProp1 : MultipliableProperty | name : "multProp1", isOrdered : false, isUnique : false, lowerBound : 1, upperBound : 5, owningClass : 'ownCls > addProperty('stdCls, 'multProp1) .)
+(rew < 'stdCls : StandardClass | name : "stdCls", inheritanceType : APPSINGHLETABLE, properties : ne, isAbstract : false, parent : 'stdClsPar, idProperty : 'primProp > < 'primProp1 : PrimitiveProperty | name : "multProp1", isOrdered : false, isUnique : false, lowerBound : 1, upperBound : 5, owningClass : 'ownCls, defaultValue : "defVal", type : 'primCls > setIdProperty('stdCls, 'primProp1) .)
+(rew < 'stdCls : StandardClass | name : "stdCls", inheritanceType : APPSINGHLETABLE, properties : ne, isAbstract : false, parent : 'stdClsPar, idProperty : 'primProp > < 'stdClsPar1 : StandardClass | name : "stdClsPar1", inheritanceType : APPSINGHLETABLE, properties : ne, isAbstract : false, parent : 'stdClsPar2, idProperty : 'primProp > setParent('stdCls, 'stdClsPar1) .)
+
+load app_AssociationProperty.maude .
+(rew  < 'assocProp : AssociationProperty | > .)
+
+load app_GeneralClass.maude .

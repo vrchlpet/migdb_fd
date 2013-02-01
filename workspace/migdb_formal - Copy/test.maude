@@ -1,0 +1,56 @@
+
+(omod BASE is 
+
+	pr STRING .
+	pr QID .
+	pr INT .
+	
+	subsort Qid < Oid .
+	
+	class StringVal | value : Qid .
+	class IntVal | value : Int .
+
+endom)
+
+(omod MODEL-ENTITY is
+	
+	pr BASE .
+	
+	class ModelEntity | name : Oid .
+	
+	msg getName : Oid -> Msg .
+	
+	vars N M : Oid .
+	var S : Qid .
+	
+	rl [getName] : getName(N) < N : ModelEntity | name : M > < M : StringVal | value : S > => < M : StringVal | value : S > .
+
+
+endom)
+
+(omod GENERAL-CLASS is
+
+	pr BASE .
+	pr MODEL-ENTITY .
+	
+	class GeneralClass | name2 : Qid . 
+	
+	subclass GeneralClass < ModelEntity .
+
+endom)
+	
+(omod PROPERTY is
+	
+	pr BASE .
+	
+	class Property | name : Oid .
+	
+	msg getPropertyName : Oid -> Msg .
+	
+	vars N M : Oid .
+	var S : Qid .
+	
+	rl [getPropertyName] : getPropertyName(N) < N : Property | name : M > < M : StringVal | value : S > => < M : StringVal | value : S > .
+
+
+endom)

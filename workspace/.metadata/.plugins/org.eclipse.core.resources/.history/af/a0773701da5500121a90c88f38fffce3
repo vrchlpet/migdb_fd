@@ -1,0 +1,36 @@
+(omod BASE is
+	
+	pr NAT .
+	pr BOOL .
+	pr STRING .
+	pr QID .
+	
+	sort PrimitiveType .
+	ops APPINT APPBOOL APPSTRING APPCHAR : -> PrimitiveType  [ctor] .
+	
+	sort InheritanceType .
+	ops APPSINGHLETABLE APPJOINED APPTABLEPERCLASS : -> InheritanceType [ctor] .
+	
+	subsort Qid < Oid .
+--------------------------------------
+	
+	sort OidSeq .
+	subsort Oid < OidSeq .
+	op ne : -> OidSeq .
+	op __ : OidSeq OidSeq -> OidSeq [comm assoc id: ne] .
+	
+--------------------------------------
+
+	class Column | defaultValue : String, name : String, type : PrimitiveType, owningTable : Oid .
+	class Constraint | name : String, constrainedColumn : Oid, owningTable : Oid .
+	class Table | name : String, columns : OidSeq, constraints : OidSeq, owningSchema : Oid .
+	class Index | name : String, columns : OidSeq, owningSchema : Oid .
+	class Sequence | name : String, startValue : Nat, owningSchema : Oid .
+	class Schema | name : String, tables : OidSeq, indexes : Oidseq .
+	class Structure | schemas : OidSeq .
+	class ForeignKey | targetTable : Oid .
+---	class NotNull | .
+---	class Unique | .
+---	class PrimaryKey | .
+	
+endom)

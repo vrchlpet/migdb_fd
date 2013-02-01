@@ -1,0 +1,8 @@
+fmod FOREIGN-KEY-CREATION is
+	pr BASE-CREATION .
+	pr FOREIGN-KEY .
+	
+	vars A B D : Qid .
+	eq updateName(D, foreignKey(A, B)) = foreignKey(D, B) . 
+	
+endfm

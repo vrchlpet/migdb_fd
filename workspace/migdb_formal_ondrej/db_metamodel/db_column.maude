@@ -1,0 +1,23 @@
+fmod COLUMN is
+	pr QID .
+	pr DB-PRIMITIVE-TYPE .
+	pr BASE-EXTENDED .
+
+	
+	sorts Column ColumnSequence .
+	subsort Ne < Column < Element .
+	subsort Column < ColumnSequence < ElementSequence < NeList{Element} . 
+	
+	op column  : Qid DbPrimitiveType -> Column [ctor] .
+	op __ : ColumnSequence ColumnSequence -> ColumnSequence [ctor ditto] .
+	
+	vars A : Qid .
+	var PT : DbPrimitiveType .
+	
+	op getColumnType : Column -> DbPrimitiveType .
+	eq getColumnType(column(A, PT)) = PT .
+		
+	eq name(column(A, PT)) = A .
+	
+endfm
+

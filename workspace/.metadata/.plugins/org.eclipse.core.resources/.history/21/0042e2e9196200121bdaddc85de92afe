@@ -1,0 +1,94 @@
+(omod STRUCTURE is
+	
+	pr BASE .
+	
+	msg addEntity : Oid Oid -> Msg .
+
+	var M N : Oid .
+	var OS : OidSeq .
+
+	rl [addEntity] : addEntity(M, N) < M : Structure | entities : OS > < N : ModelEntity | > => < M : Structure | entities : N OS > < N : ModelEntity | > .
+	
+	
+	----------------- OPERATIONS ---------------------
+
+	vars O1 O2 : Oid .
+	vars S1 S2 : String .
+	vars B1 B2 : Bool .
+	vars IT1 IT2 : InheritanceType .
+	vars C1 C2 : Configuration .
+	
+
+
+--- structure 	name	isabstract	interitancetype
+	msg addAbstractClass : Oid String Bool InheritanceType -> Msg .
+			
+--- structure	name	primitivetype
+	msg addPrimitiveClass : Oid String PrimitiveType -> Msg .
+	
+--- structure	name
+	msg addEmbaddedClass : Oid String -> Msg .
+	
+--- structure	name	newName
+	msg renameEntity : Oid String String -> Msg .
+	
+--- structure name
+	msg removeEntity : Oid String -> Msg .
+	
+--- structure	owningClassName	name	type	defValue	lBound	uBound	ordered	unique
+	msg addAttribute : Oid String String String String Nat Nat Bool Bool -> Msg .
+	
+--- structure	className	name	newName
+	msg renameProperty : Oid String String String -> Msg .
+	
+--- structure	className	name
+	msg removeProperty : Oid String String -> Msg .
+
+--- structure	firstClassName	firstPropName	secondClassName secondPropName isOpposite
+	msg setOpposite : Oid String String String String Bool -> Msg .
+	
+--- structure className	isAbstract
+	msg setAbstract : Oid String Bool -> Msg .
+	
+--- structure childName parentName
+	msg setParent : Oid String String -> Msg .
+	
+--- struture owningClassName	attName	type
+	msg setType : Oid String String String -> Msg .
+	
+--- structure	owningCLassName	propName	lBound	uBound
+	msg setBounds : Oid String String Nat Nat -> Msg .
+	
+--- structure	owningClassName	propName	isOrderd
+	msg setOrdered : Oid String String Bool -> Msg .
+	
+--- structure	owningClassName	propName	isunique
+	msg setUnique : Oid String String Bool -> Msg .
+	
+--- structure	owningClassName	propName	targetClassName	mergeType
+	msg copyProperty : Oid String String String -> Msg .
+	
+--- structure	owningClassName	propName	targetClassName	mergeType
+	msg moveProperty : Oid String String String -> Msg .
+	
+
+endom)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

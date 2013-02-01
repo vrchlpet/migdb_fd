@@ -1,0 +1,16 @@
+(omod STANDARD-CLASS is 
+
+	pr BASE-EXTENDED .
+	pr MULTIPLIABLE-PROPERTY .
+	pr PRIMITIVE-PROPERTY .
+	pr GENERAL-CLASS .
+	pr LIST{MultipliablePropertyOid} .
+	
+	sort StandardClassOid .
+	subsort StandardClassOid < Oid .
+
+	class StandardClass | inheritanceType : InheritanceType, properties : List{MultipliablePropertyOid}, isAbstract : BooleanF, parent : StandardClassOid, idProperty : PrimitivePropertyOid . 
+
+	var A : Qid .
+
+endom)

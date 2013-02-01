@@ -1,0 +1,21 @@
+(omod EMBADDED-CLASS is
+
+	pr BASE .
+	pr MODEL-ENTITY .
+	pr EMBADDED-PROPERTY .
+
+	
+
+	subclass EmbaddedClass < ModelEntity .
+	
+	msg setIdProperty : Oid Oid -> Msg .
+	msg addEmbaddedProperty : Oid Oid -> Msg .
+	
+	
+	var M N O : Oid .
+	var OidList : OidSeq .
+	
+	rl [setIdProperty] : setIdProperty(M, N) < M : EmbaddedClass | > < N : EmbaddedProperty | > => < M : EmbaddedClass | idProperty : N > < N : EmbaddedProperty | > .
+	rl [addEmbaddedProperty] : addEmbaddedProperty(M, N) < M : EmbaddedClass | embaddedProperties : OidList > < N : EmbaddedProperty | > => < M : EmbaddedClass | embaddedProperties : N OidList > < N : EmbaddedProperty | > .
+	
+endom)

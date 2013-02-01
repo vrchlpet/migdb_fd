@@ -1,0 +1,12 @@
+(omod ASSOCIATION_PROPERTY is
+
+	pr MULTIPLIABLE-PROPERTY .
+	pr STANDARD-CLASS .
+	
+	sort AssociationPropertyOid .
+	subsort AssociationPropertyOid < Oid .
+	
+	class AssociationProperty | oppositeProperty : AssociationPropertyOid, type : StandardClassOid .
+	subclass AssociationProperty < MultipliableProperty .
+
+endom)

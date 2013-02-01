@@ -1,0 +1,16 @@
+(omod CONSTRAINT is
+
+	pr BASE .
+	
+	msg setName : Oid String -> Msg .
+	msg setConstrainedColumn : Oid Oid -> Msg .
+	msg setOwningTable : Oid Oid -> Msg .
+	
+	var M N : Oid .
+	var S : String .
+	
+	rl [setName] : setName(M,S) < M : Constraint | > => < M : Constraint | name : S > .
+	rl [setConstrainedColumn] : setConstrainedColumn(M,N) < M : Constraint | > < N : Column | > => < M : Constraint | constrainedColumn : N > < N : Column | > .
+	rl [setOwningTable] : setOwningTable(M,N) < M : Constraint | > < N : Table | > => < M : Constraint | owningTable : N > < N : Table | > .
+	
+endom)

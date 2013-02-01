@@ -1,0 +1,23 @@
+(omod MULTIPLIABLE-PROPERTY is 
+	
+	pr BASE .
+
+	subclass MultipliableProperty < Property .
+
+	msg setOrdered : Oid Bool -> Msg .
+	msg setUnique : Oid Bool -> Msg .
+	msg setLowerBound : Oid Nat -> Msg .
+	msg setUpperBound : Oid Nat -> Msg .
+	msg setOwningClass : Oid Oid -> Msg .
+	
+	var M N : Oid .
+	var B : Bool .
+	var I : Nat .
+	
+	rl [setOrdered] : setOrdered(M, B) < M : MultipliableProperty | > => < M : MultipliableProperty | isOrdered : B > .
+	rl [setUnique] : setUnique(M, B) < M : MultipliableProperty | > => < M : MultipliableProperty | isUnique : B > .
+	rl [setLowerBound] : setLowerBound(M, I) < M : MultipliableProperty | > => < M : MultipliableProperty | lowerBound : I > .
+	rl [setUpperBound] : setUpperBound(M, I) < M : MultipliableProperty | > => < M : MultipliableProperty | upperBound : I > .
+	rl [setOwningClass] : setOwningClass(M, N) < M : MultipliableProperty | > < N : StandardClass | > => < M : MultipliableProperty | owningClass : N > < N : StandardClass | > .
+
+endom)

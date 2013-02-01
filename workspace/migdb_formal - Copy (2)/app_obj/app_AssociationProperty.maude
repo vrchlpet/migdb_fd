@@ -1,0 +1,20 @@
+(omod ASSOCIATION-PROPERTY is
+	
+	pr MULTIPLIABLE-PROPERTY .
+	
+	sort AssociationPropertyId .
+	subsort AssociationPropertyId < Oid .
+	
+	
+	class AssociationProperty |  .
+	subclass AssociationProperty < MultipliableProperty .
+	
+	msg getDefaultValue : AssociationPropertyId -> Msg .
+	
+	var P : AssociationPropertyId .
+	var S : StringId .
+	var Q : Oid .
+	
+	rl [getDefaultValue] : getDefaultValue(P) < P : PrimitiveProperty | primitiveType : S > < S : String | value : Q > => < S : String | value : Q > .
+
+endom)

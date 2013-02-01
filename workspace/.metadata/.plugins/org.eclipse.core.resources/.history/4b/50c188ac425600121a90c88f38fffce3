@@ -1,0 +1,27 @@
+(omod STRUCTURE is
+	
+	pr BASE .
+	
+	msg addEntity : Oid Oid -> Msg .
+
+	var M N : Oid .
+	var OS : OidSeq .
+
+	rl [addEntity] : addEntity(M, N) < M : Structure | entities : OS > < N : ModelEntity | > => < M : Structure | entities : N OS > < N : ModelEntity | > .
+	
+	
+	
+----------------- OPERATIONS ---------------------
+--- structure 	name	isabstract	interitancetype
+	msg addAbstractClass : Oid String Bool IngeritanceType -> Msg .
+			
+--- structure	name	primitivetype
+	msg addPrimitiveClass : Oid String PrimitiveType -> Msg .
+	
+--- structure	name
+	msg addEmbaddedClass : Oid String -> Msg .
+	
+--- structure	name	newName
+	msg renameEntity : Oid String String -> Msg .
+	
+endom)

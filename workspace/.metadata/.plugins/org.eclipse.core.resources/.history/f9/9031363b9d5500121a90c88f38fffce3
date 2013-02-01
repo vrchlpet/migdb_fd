@@ -1,0 +1,15 @@
+(omod STRUCTURE is
+	
+	pr BASE .
+	pr MODEL-ENTITY .
+	
+	class Structure | entities : OidSeq .
+	
+	msg addEntity : Oid Oid -> Msg .
+
+	var M N : Oid .
+	var OS : OidSeq .
+
+	rl [addEntity] : addEntity(M, N) < M : Structure | entities : OS > < N : ModelEntity | > => < M : Structure | entities : N OS > < N : ModelEntity | > .
+	
+endom)

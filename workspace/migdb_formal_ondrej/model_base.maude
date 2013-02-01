@@ -1,0 +1,61 @@
+fmod BASE is
+	pr QID .
+	
+	sorts Element Ne .
+	
+	op ne : -> Ne [ctor] .
+	
+	op name : Element -> Qid .
+
+endfm
+
+view Element from TRIV to BASE is
+	sort Elt to Element .
+endv
+
+fmod BASE-EXTENDED is
+	pr LIST{Element} .
+	pr NAT .
+		
+	sort ElementSequence .
+	subsort Ne < Element . 	
+	subsort Element < ElementSequence < NeList{Element} .
+	
+	op __ :  ElementSequence ElementSequence -> ElementSequence [ctor ditto] .   
+	
+	var A : Qid .
+	var Q : Element .
+	var D : ElementSequence .
+	
+	eq D ne = D .
+	eq ne D = D .
+	
+
+	op exists : Qid ElementSequence -> Bool .
+	eq exists(A, ne) = false . 
+	ceq exists(A, Q) = true if A == name(Q) .
+	eq exists(A, Q) = false [owise] .
+	ceq exists(A, D) = true if A == name(head(D)) .
+	eq exists(A, D) = exists(A, tail(D)) [owise] .
+	
+	op getByName : Qid ElementSequence -> Element .
+	ceq getByName(A, D) = ne if not exists(A, D) .
+	ceq getByName(A, D) = head(D) if name(head(D)) == A .
+	eq getByName(A, D) = getByName(A, tail(D)) [owise] .
+	ceq getByName(A, Q) = Q if name(Q) == A .
+	eq getByName(A, Q) = ne [owise] .
+	
+	op getOthersThan : Qid ElementSequence -> ElementSequence .
+	ceq getOthersThan(A, Q) = ne if name(Q) == A .
+	eq getOthersThan(A, Q) = Q [owise] .
+	eq getOthersThan(A, ne) = ne .
+	ceq getOthersThan(A, D) =  D if not exists(A, D) .
+	ceq getOthersThan(A, D) = tail(D) if name(head(D)) == A .
+	eq getOthersThan(A, D) = head(D) getOthersThan(A, tail(D)) [owise] .
+	
+	op length : ElementSequence -> Nat .
+	eq length(ne) = 0 .
+	eq length(Q) = 1 .
+	eq length(D) = length(head(D)) + length(tail(D)) .
+		
+endfm

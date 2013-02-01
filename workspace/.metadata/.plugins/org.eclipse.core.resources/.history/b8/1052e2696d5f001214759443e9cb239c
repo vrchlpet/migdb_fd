@@ -1,0 +1,14 @@
+
+(omod BASE is 
+
+	pr STRING .
+	pr QID .
+	subsort Qid < Oid .
+	pr NAT .
+	
+	class ELement | name : String, count : Nat .
+	
+	
+	op getName : Configuration -> String . 
+
+endom)

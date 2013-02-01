@@ -1,0 +1,16 @@
+fmod PROPERTY is
+	pr BASE .
+	pr BASE_EXTENDED .
+	
+	sort Property .
+	
+	op property : Qid -> Property [ctor] .
+	op name : Property -> Qid .
+	
+	
+	vars N : Qid .
+	
+	eq name(property(N)) = N .
+
+
+endfm

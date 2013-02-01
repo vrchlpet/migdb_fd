@@ -1,0 +1,35 @@
+fmod APP-CLASS is
+  	pr BOOL .
+	pr APP-ABSTRACT-TYPE .
+  	pr APP-INHERITANCE-TYPE .
+  	pr APP-PROPERTY .
+  
+  	sorts Class ClassSequence .
+  	subsort Class < AbstractType .
+	subsort Class < ClassSequence < ElementSequence < NeList{Element} . 
+
+--- name, list of properties, is abstract, name of parent, type of hierarchy
+  	op class :  Qid PropertySequence Bool Qid InheritanceType -> Class [ctor] .
+
+	op __ : ClassSequence ClassSequence -> ClassSequence [ctor ditto] .
+  	
+  	var N P : Qid .
+  	var PS : PropertySequence .
+  	var A : Bool .
+  	var IT : InheritanceType .
+
+	eq name(class(N, PS, A, P, IT)) = N .
+	
+	op getParent : Class -> Qid .
+  	eq getParent(class(N, PS, A, P, IT)) = P .
+
+  	op getProperties : Class -> PropertySequence .
+	eq getProperties(class(N, PS, A, P, IT)) = PS .
+	
+	op isAbstract : Class -> Bool .
+  	eq isAbstract(class(N, PS, A, P, IT)) = A .
+
+	op getInheritanceType : Class -> InheritanceType .
+  	eq getInheritanceType(class(N, PS, A, P, IT)) = IT .
+  	
+endfm

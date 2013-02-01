@@ -1,0 +1,55 @@
+fmod TABLE-CREATION is
+	pr TABLE .
+	pr BASE-CREATION .
+	pr FOREIGN-KEY-CREATION .
+	pr PRIMARY-KEY-CREATION .
+	pr COLUMN-CREATION .
+	
+	vars B A : Qid . 
+	var T : Table .
+	var C : Column .
+	var CS : ColumnSequence .
+	var FK : ForeignKey .
+	var FS : ForeignKeySequence .
+	var P : PrimaryKey .
+	
+	eq updateName(B, table(A, P, CS, FS)) = table(B, P, CS, FS) .
+
+--- UPDATES
+	op updateColumnName : Qid Qid Table -> Table .
+	ceq updateColumnName(A, B, T) = T if not exists(A, getColumns(T)) or exists(B, getColumns(T)) or exists(B, getForeignKeys(T)) .
+	eq updateColumnName(A, B, T) = table(name(T), getPrimaryKey(T), getOthersThan(A, getColumns(T)) updateName(B, getByName(A, getColumns(T))), getForeignKeys(T)) [owise] . 
+	
+	op updateFKName : Qid Qid Table -> Table .
+	ceq updateFKName(A, B, T) = T if not exists(A, getForeignKeys(T)) or exists(B, getColumns(T)) or exists(B, getForeignKeys(T)) .
+	eq updateFKName(A, B, T) = table(name(T), getPrimaryKey(T), getColumns(T), getOthersThan(A, getForeignKeys(T)) updateName(B, getByName(A, getForeignKeys(T)))) [owise] .
+	
+--- ADD COLUMN	
+	op addColumn : Table Column -> Table .
+	ceq addColumn(T, C) = T if exists(name(C), getColumns(T)) or exists(name(C), getForeignKeys(T)) .
+	eq addColumn(T, C) = table(name(T), getPrimaryKey(T), append(C, getColumns(T)),  getForeignKeys(T)) [owise] .
+		
+--- ADD FOREIGN KEY
+	op addForeignKey : Table ForeignKey -> Table .
+	ceq addForeignKey(T,  FK) = T if exists(name(FK), getColumns(T)) or exists(name(FK), getForeignKeys(T)).
+	eq addForeignKey(T,  FK) =  table(name(T), getPrimaryKey(T), getColumns(T), FK getForeignKeys(T)) [owise] .
+
+--- REMOVE COLUMN
+	op removeColumn : Table Qid -> Table .
+	ceq removeColumn(T, A) = T if not exists(A, getColumns(T)) .
+	eq removeColumn(T, A) = table(name(T), getPrimaryKey(T), getOthersThan(A, getColumns(T)), getForeignKeys(T)) [owise] .
+
+--- REMOVE FOREIGN KEY
+	op removeFK : Table Qid -> Table .
+	ceq removeFK(T, A) = T if not exists(A, getForeignKeys(T)) .
+	eq removeFK(T, A) = table(name(T), getPrimaryKey(T), getColumns(T), getOthersThan(A, getForeignKeys(T))) [owise] .
+	
+--- helpers
+	op isReferenced : Qid Table -> Bool .
+	eq isReferenced(A, T) = isReferenced(A, getForeignKeys(T)) .
+	
+	op isReferenced : Qid ForeignKeySequence -> Bool .
+	eq isReferenced(A, FS) = isReferenced(A, head(FS)) or isReferenced(A, tail(FS)) .
+	ceq isReferenced(A, FK) = true if A == getReferencedTableName(FK) .
+	eq isReferenced(A, FS) = false [owise] .
+endfm

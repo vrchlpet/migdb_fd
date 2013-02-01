@@ -1,0 +1,31 @@
+(omod BASE is
+	
+	pr NAT .
+	pr BOOL .
+	pr STRING .
+	pr QID .
+	
+	sort PrimitiveType .
+	ops APPINT APPBOOL APPSTRING APPCHAR : -> PrimitiveType  [ctor] .
+	
+	sort InheritanceType .
+	ops APPSINGHLETABLE APPJOINED APPTABLEPERCLASS : -> InheritanceType [ctor] .
+	
+	subsort Qid < Oid .
+--------------------------------------	
+	
+	sort OidSeq .
+	subsort Oid < OidSeq .
+	op ne : -> OidSeq .
+	op __ : OidSeq OidSeq -> OidSeq [comm assoc id: ne] .
+	
+--------------------------------------
+
+	class AssociationProperty | oppositeProperty : Oid, type : Oid .
+	class EmbaddedClass | idProperty : Oid, embaddedProperties : OidSeq .
+	class EmbaddedProperty | isMandatory : Bool, type : Oid, owningClass : Oid .
+	class GeneralClass | .
+	class ModelEntity | name : String .
+	class MultipliableProperty | isOrdered : Bool, isUnique : Bool, lowerBound : Nat, upperBound : Nat, owningClass : Oid .
+	
+endom)

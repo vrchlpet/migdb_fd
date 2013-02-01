@@ -1,0 +1,7 @@
+(omod SCHEMA is 
+
+	pr BASE .
+
+	class Structure | schemas : OidSeq .
+
+endom)

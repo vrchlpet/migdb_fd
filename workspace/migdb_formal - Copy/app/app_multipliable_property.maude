@@ -1,0 +1,38 @@
+fmod MULTIPLIABLE_PROPERTY is
+	
+	pr BASE-EXTENDED .
+	pr BASE .
+	pr PROPERTY .
+	pr STANDARD_CLASS .
+	pr BOOL .
+
+	sort MultipliableProperty MultipliablePropertySequence .
+	subsort MultipliableProperty < Element .
+	subsort MultipliableProperty < Property .
+	subsort MultipliableProperty < MultipliablePropertySequence < ElementSequence < NeList{Element} .
+	
+	op multipliableProperty : Qid Qid Bool Bool Qid Qid StandardClass -> MultipliableProperty .
+	op multipliableProperty : Property Qid Bool Bool Qid Qid StandardClass -> MultipliableProperty [ctor] .
+	op getName : MultipliableProperty -> Qid .
+	op getDefaultValue : MultipliableProperty -> Qid .
+	op isOrdered : MultipliableProperty -> Bool .
+	op isUnique : MultipliableProperty -> Bool .
+	op getLowerBound : MultipliableProperty -> Qid .
+	op getUpperBound : MultipliableProperty -> Qid .
+	op getOwningClass : MultipliableProperty -> StandardClass .
+	
+	var SC : StandardClass .
+	var N, M, O, R : Qid .
+	var B1, B2 : Bool .
+	var P : Property .
+	
+	eq multipliableProperty(N, M, B1, B2, O, R, SC) = multipliableProperty(property(N), M, B1, B2, O, R) .
+	eq getName(multipliableProperty(property(N), M, B1, B2, O, R, SC)) = N .
+	eq getDefaultValue(multipliableProperty(P, M, B1, B2, O, R, SC)) = M .
+	eq isOrdered(multipliableProperty(P, M, B1, B2, O, R, SC)) = B1 .
+	eq isUnique(multipliableProperty(P, M, B1, B2, O, R, SC)) = B2 .
+	eq getLowerBound(multipliableProperty(P, M, B1, B2, O, R, SC)) = O .
+	eq getUpperBound(multipliableProperty(P, M, B1, B2, O, R, SC)) = P .
+	eq getStandardClass(multipliableProperty(P, M, B1, B2, O, R, SC)) = SC .
+
+endfm

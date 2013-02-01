@@ -1,0 +1,40 @@
+load database.maude
+load row_creation.maude
+load storage_creation.maude
+
+fmod DATABASE-CREATION is
+	pr DATABASE .
+	pr ROW-CREATION .
+	pr STORAGE-CREATION .
+	
+	var Q : Qid .
+	var D : Database .
+	var S : Schema .
+	var T : Table .
+	var R : Row .
+	var STS : List{Storage} .
+	
+	---TODO: přidává jen prázdné schéma, jinak nekonzistence
+	op addSchema : Schema Database -> Database .									
+	ceq addSchema(S, D) = database(S, nil) if schema(D) == ne and storages(D) == nil and getTables(S) == ne .
+	eq addSchema(S, D) = inconsistDatabase(schema(D), storages(D)) [owise] .
+	
+	op addTable : Table Database -> Database .
+	eq addTable(ne, D) = D .
+	ceq addTable(T, D) = inconsistDatabase(schema(D), storages(D)) if schema(D) == ne .
+	eq addTable(T, D) = database(addTableToSchema(T, schema(D)), storages(D) storage(name(T), nil)) [owise] .
+
+	
+	op insertI : Qid Row Database -> Database .
+	ceq  insertI(Q, R, D) = inconsistDatabase(schema(D), storages(D)) if not exists(Q, getTables(schema(D))) 
+																		 or not isValid(R, getByName(Q, getTables(schema(D))))
+																		 or not hasUniqueKey(getKey(R), rows(getByName(Q, storages(D)))) .
+	eq insertI(Q, R, D) = database(schema(D), insertToStorage(Q, R, storages(D))) [owise] .
+	
+	
+	---helpers
+	op getByName : Qid List{Storage} -> Storage .
+	ceq getByName(Q, STS) = head(STS) if Q == name(head(STS)) .
+	eq getByName(Q, STS) = getByName(Q, tail(STS)) [owise] .
+
+endfm

@@ -1,0 +1,35 @@
+fmod APP_EXT is
+  pr APP-MODEL .
+  pr STRING . 
+
+  var appRoot : Model .
+  var cls : Class .
+  var clsList : List{CLASS} .
+  var str : String .
+
+  op validateModel() : Model -> Boolean .
+
+  op findClass(_  _) : Model String -> Class .
+  eq findClass(model(clsList) str) = findClassInList(clsList str) .
+
+  op findClassInList(_ _) : List{Class} String -> Class .
+  eq findClassInList(clsList, str) = getObj(ref(str, "class"), clsList) .
+  
+ --- op getRootClass(_ _) : Model Class -> Class .
+ --- ceq getRootClass(appRoot cls) = cls if(hasParent(cls) == false) .
+ --- eq getRootClass(appRoot cls) = getRootClass(appRoot findClass(appRoot name(getParent(cls)))) [owise] . 
+
+---  op containsListClass(_ _) : List{Class} String  .
+---  eq containsListClass(clsList str) = contains(ref(str "class") clsList) .
+
+  op collectPropsToRoot(_ _) : List{Class} String -> List{Property} .
+  ceq collectPropsToRoot(clsList str) = nil if containsListClass == false .
+  ceq collectPropsToRoot(clsList str) = getProperties(findClassInList(clsList str)) if hasParent(findClassInList(clsList str)) == false .
+  ceq collectPropsToRoot(clsList str) = getProperties(findClassInList(clsList str)) collectPropsToRoot(clsList, name(getParent(findClassInList(clsList str)))) .
+  
+  op removeClassFromList(_ _) : List{CLass} String -> List{Class} .
+  eq removeClassFromList(clsList str) = remove(ref(str "class") clsList) .
+
+  op isPrimitive(_ _) : Property Model -> Bool .
+  eq isPrimitive(prop appRoot) = contains(ref(name(prop) "primitiveClass") getClasses(model)) .
+endfm
